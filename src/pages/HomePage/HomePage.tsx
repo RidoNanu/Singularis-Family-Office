@@ -27,12 +27,42 @@ const staggerMotion = { hidden: {}, visible: {} } as const;
 const itemMotion = { hidden: {}, visible: {} } as const;
 const sectionMotion = { hidden: {}, visible: {} } as const;
 
-const operationalSteps = [
-  'Define priorities and oversight',
-  'Sequence review cadence',
-  'Align execution with governance',
-];
+const CONNECTOR_WIDTH = '140px';
+const SPINE_COLOR = 'rgba(30,55,84,0.20)';
+const CONNECTOR_COLOR = 'rgba(30,55,84,0.12)';
 
+const operationsItems = [
+  {
+    mark: '01',
+    heading: 'Define priorities and oversight',
+    body: `Strategic priorities are clarified through visible governance structures,\nexecutive sequencing, and measured institutional pacing before operational execution begins.`,
+    rightMeta: 'SEQUENCED',
+  },
+  {
+    mark: '02',
+    heading: 'Sequence review cadence',
+    body: `Quarterly governance reviews establish operational rhythm,\nreduce reactive decision-making, and preserve organizational composure across leadership systems.`,
+    rightMeta: 'STRUCTURED',
+  },
+  {
+    mark: '03',
+    heading: 'Align execution with governance',
+    body: `Operational execution remains connected to institutional priorities\nthrough layered accountability, review systems,\nand visible strategic alignment.`,
+    rightMeta: 'ALIGNED',
+  },
+  {
+    mark: '04',
+    heading: 'Preserve continuity through review',
+    body: `Institutional review systems maintain governance clarity,\nminimize fragmentation,\nand ensure strategic transitions remain readable over time.`,
+    rightMeta: 'MEASURED',
+  },
+  {
+    mark: '05',
+    heading: 'Sustain long-term operational continuity',
+    body: `Continuity is preserved through succession preparation,\ngovernance discipline,\nand structures designed for multi-generational stewardship.`,
+    rightMeta: 'ENDURING',
+  },
+];
 const beltCards: BeltCard[] = [
   {
     id: 'decision-pathways',
@@ -402,25 +432,96 @@ export function HomePage() {
         variants={sectionMotion}
       >
         <div className={pageFrame}>
-          <div className="mx-auto max-w-[86rem]">
-            <motion.p variants={itemMotion} className="text-[0.72rem] font-medium uppercase tracking-[0.34em] text-[#1E3754]/52">
-              Strategic operational coordination
-            </motion.p>
-            <motion.div variants={itemMotion} className="mt-5 max-w-[19ch] text-[clamp(2.2rem,4.8vw,4.4rem)] font-light leading-[0.92] tracking-[-0.06em] text-[#1E3754]">
-              A disciplined operational rhythm.
+          <div className="mx-auto max-w-[92rem] relative">
+
+            {/* Background atmosphere words (very low opacity) */}
+            <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden select-none" aria-hidden>
+              <span className="absolute left-[-6%] top-[6%] text-[clamp(10rem,18vw,22rem)] font-extralight leading-none tracking-[-0.08em] text-[#1E3754]/[0.02]">CADENCE</span>
+              <span className="absolute right-[-8%] top-[28%] text-[clamp(10rem,18vw,22rem)] font-extralight leading-none tracking-[-0.06em] text-[#1E3754]/[0.02]">ALIGNMENT</span>
+              <span className="absolute left-[10%] bottom-[8%] text-[clamp(10rem,18vw,22rem)] font-extralight leading-none tracking-[-0.07em] text-[#1E3754]/[0.02]">OVERSIGHT</span>
+            </div>
+
+            {/* Top labelled heading area (centered) */}
+            <motion.div variants={itemMotion} className="text-center">
+              <p className="text-[0.72rem] font-medium uppercase tracking-[0.34em] text-[#1E3754]/52">Strategic operational coordination</p>
+              <h2 className="mt-6 mx-auto max-w-[56ch] text-[clamp(40px,6vw,72px)] font-light leading-[0.92] tracking-[-0.02em] text-[#1E3754]">A disciplined operational rhythm.</h2>
+              <p className="mt-6 mx-auto max-w-[60ch] text-[clamp(18px,2vw,20px)] leading-[1.8] text-[#1E3754]/72">Institutional continuity depends on visible sequencing, measured governance pacing, and operational structures that remain readable over time.</p>
             </motion.div>
 
-            <motion.div variants={staggerMotion} initial={false} className="mt-14 border-t border-[#1E3754]/10">
-              {operationalSteps.map((item, index) => (
-                <motion.div key={item} variants={itemMotion} className="grid gap-5 border-b border-[#1E3754]/10 py-6 lg:grid-cols-[0.16fr_0.84fr] lg:items-start lg:py-7">
-                  <span className="text-[0.72rem] uppercase tracking-[0.3em] text-[#1E3754]/42">0{index + 1}</span>
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
-                    <p className="max-w-[28rem] text-[1rem] leading-[1.9] text-[#1E3754]/74 sm:text-[1.06rem]">{item}</p>
-                    <span className="text-[0.72rem] uppercase tracking-[0.26em] text-[#1E3754]/40">Sequenced</span>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+            {/* Sequence area with center spine */}
+            <div className="relative mt-16 lg:mt-20">
+              {/* center spine (one thin line) */}
+              <div className="absolute left-1/2 top-0 bottom-0 transform -translate-x-1/2" style={{ width: '2px', backgroundColor: SPINE_COLOR }} />
+
+              <div className="relative">
+                <div className="space-y-20 lg:space-y-24">
+                  {operationsItems.map((phase, i) => {
+                    const isLeft = i % 2 === 0;
+                    return (
+                      <motion.div key={phase.mark} variants={itemMotion} className="grid grid-cols-1 lg:grid-cols-12 items-start gap-4">
+                        {/* Left column (content for left items) */}
+                        <div className={`lg:col-span-5 ${isLeft ? 'lg:text-right lg:pr-8' : 'lg:col-start-1 lg:invisible'}`}>
+                          {isLeft ? (
+                            <div className="max-w-[44ch] ml-auto">
+                              <div className="text-[0.92rem] font-mono text-[#1E3754]/30">{phase.mark}</div>
+                              <h3 className="mt-2 text-[clamp(28px,3.6vw,36px)] font-medium text-[#1E3754]">{phase.heading}</h3>
+                              <p className="mt-3 text-[clamp(18px,1.2vw,20px)] leading-[1.6] text-[#1E3754]/75 whitespace-pre-line">{phase.body}</p>
+                              <div className="mt-3 text-[0.72rem] uppercase tracking-[0.28em] text-[#1E3754]/40">{phase.rightMeta}</div>
+                            </div>
+                          ) : null}
+                        </div>
+
+                        {/* Center connector column */}
+                        <div className="lg:col-span-2 flex justify-center">
+                          <div className="relative w-full flex justify-center items-start">
+                            {/* horizontal connector from spine to node (fixed equal length, anchors at center) */}
+                            <motion.div
+                              initial={{ opacity: 0, scaleX: 0 }}
+                              whileInView={{ opacity: 1, scaleX: 1 }}
+                              viewport={{ once: true, amount: 0.2 }}
+                              transition={{ duration: 0.6, ease: easing }}
+                              className="absolute"
+                              style={{
+                                top: '32px',
+                                height: '2px',
+                                backgroundColor: CONNECTOR_COLOR,
+                                width: CONNECTOR_WIDTH,
+                                ...(isLeft ? { right: '50%' } : { left: '50%' }),
+                                transformOrigin: isLeft ? 'right center' : 'left center'
+                              }}
+                            />
+
+                            {/* circular node centered on the spine */}
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.9, y: 8 }}
+                              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                              viewport={{ once: true, amount: 0.2 }}
+                              transition={{ duration: 0.55, ease: easing }}
+                              className="relative z-10 mt-0"
+                              style={{ left: '50%', transform: 'translateX(-50%)' }}
+                            >
+                              <div className="w-4 h-4 rounded-full bg-white border border-[#1E3754]/20 shadow-sm" />
+                            </motion.div>
+                          </div>
+                        </div>
+
+                        {/* Right column (content for right items) */}
+                        <div className={`lg:col-span-5 ${!isLeft ? 'lg:text-left lg:pl-8' : 'lg:col-start-8 lg:invisible'}`}>
+                          {!isLeft ? (
+                            <div className="max-w-[44ch]">
+                              <div className="text-[0.92rem] font-mono text-[#1E3754]/30">{phase.mark}</div>
+                              <h3 className="mt-2 text-[clamp(28px,3.6vw,36px)] font-medium text-[#1E3754]">{phase.heading}</h3>
+                              <p className="mt-3 text-[clamp(18px,1.2vw,20px)] leading-[1.6] text-[#1E3754]/75 whitespace-pre-line">{phase.body}</p>
+                              <div className="mt-3 text-[0.72rem] uppercase tracking-[0.28em] text-[#1E3754]/40">{phase.rightMeta}</div>
+                            </div>
+                          ) : null}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </motion.section>
