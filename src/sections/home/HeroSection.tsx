@@ -116,13 +116,13 @@ export function HeroSection() {
 
             {/* MIDDLE: Monumental Centered Editorial Heading + Restrained Supporting Statement */}
             <div className="my-auto py-12 flex flex-col items-center">
-              <h1 className="text-[#1E3754] text-center font-light tracking-[-0.05em] text-[clamp(3.4rem,7.5vw,5.6rem)] leading-[0.88] select-none flex flex-col items-center">
-                <span className="overflow-hidden inline-block py-1">
+              <h1 className="text-[#1E3754] text-center font-light tracking-[-0.05em] text-[clamp(4rem,9.5vw,8rem)] leading-[0.9] select-none flex flex-col items-center">
+                <span className="overflow-hidden inline-block py-2">
                   <motion.span variants={lineVariants} custom={1} className="inline-block">
                     Singularis
                   </motion.span>
                 </span>
-                <span className="overflow-hidden inline-block py-1">
+                <span className="overflow-hidden inline-block py-2">
                   <motion.span variants={lineVariants} custom={2} className="inline-block font-extralight opacity-90">
                     Family Office
                   </motion.span>
