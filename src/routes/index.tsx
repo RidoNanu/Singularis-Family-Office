@@ -3,7 +3,7 @@ import { routeConfig } from './routeConfig';
 
 export function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Singularis-Family-Office">
       <Routes>
         {routeConfig.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
