@@ -38,6 +38,47 @@ export function HeroSection() {
   const rawRevealY = useTransform(scrollYProgress, [0, 0.25, 0.90, 1], [30, 30, 0, 0]);
   const revealY = useSpring(rawRevealY, { stiffness: 95, damping: 26 });
 
+  const easing = [0.22, 1, 0.36, 1] as const;
+
+  const lineVariants = {
+    hidden: { y: 24, opacity: 0 },
+    visible: (i: number = 0) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 1.2,
+        ease: easing,
+        delay: i * 0.1,
+      },
+    }),
+  };
+
+  const paragraphVariants = {
+    hidden: { y: 15, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 1.2,
+        ease: easing,
+        delay: 0.3,
+      },
+    },
+  };
+
+  const bottomMetaVariants = {
+    hidden: { y: 10, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 1.0,
+        ease: easing,
+        delay: 0.45,
+      },
+    },
+  };
+
   return (
     <section
       ref={containerRef}
@@ -58,35 +99,58 @@ export function HeroSection() {
 
           {/* REVEAL LAYER (Revealed underneath the sliding image) */}
           <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
             style={reduceMotion ? { opacity: 1 } : { opacity: revealOpacity, y: revealY }}
             className="relative lg:absolute lg:inset-0 min-h-[70vh] lg:h-full w-full flex flex-col justify-between py-16 lg:py-24 xl:py-28 px-6 text-center text-[#1E3754] bg-white z-10"
           >
             {/* TOP: Refined Institutional Label */}
-            <div className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40 mx-auto">
+            <motion.div
+              variants={lineVariants}
+              custom={0}
+              className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40 mx-auto"
+            >
               Institutional Presence
-            </div>
+            </motion.div>
 
             {/* MIDDLE: Monumental Centered Editorial Heading + Restrained Supporting Statement */}
             <div className="my-auto py-12 flex flex-col items-center">
-              <h1 className="text-[#1E3754] text-center font-light tracking-[-0.05em] text-[clamp(3.4rem,7.5vw,5.6rem)] leading-[0.88] select-none">
-                Singularis<br />
-                <span className="font-extralight opacity-90">Family Office</span>
+              <h1 className="text-[#1E3754] text-center font-light tracking-[-0.05em] text-[clamp(3.4rem,7.5vw,5.6rem)] leading-[0.88] select-none flex flex-col items-center">
+                <span className="overflow-hidden inline-block py-1">
+                  <motion.span variants={lineVariants} custom={1} className="inline-block">
+                    Singularis
+                  </motion.span>
+                </span>
+                <span className="overflow-hidden inline-block py-1">
+                  <motion.span variants={lineVariants} custom={2} className="inline-block font-extralight opacity-90">
+                    Family Office
+                  </motion.span>
+                </span>
               </h1>
 
-              <div className="my-10 lg:my-12 h-px w-24 bg-[#1E3754]/14" />
+              <motion.div
+                variants={lineVariants}
+                custom={3}
+                className="my-10 lg:my-12 h-px w-24 bg-[#1E3754]/14"
+              />
 
-              <p className="max-w-[20rem] text-[0.92rem] sm:text-[0.98rem] font-light leading-[1.65] text-[#1E3754]/68 tracking-[0.01em] text-center">
-                Structured oversight for<br className="hidden sm:inline" />
-                long-term stewardship<br className="hidden sm:inline" />
-                and generational continuity.
-              </p>
+              <motion.p
+                variants={paragraphVariants}
+                className="max-w-[20rem] text-[0.92rem] sm:text-[0.98rem] font-light leading-[1.65] text-[#1E3754]/68 tracking-[0.01em] text-center"
+              >
+                A discreet institutional office structured for continuity, governance clarity, and long-horizon stewardship across generations.
+              </motion.p>
             </div>
 
             {/* BOTTOM: Minimal coordinates / metadata integrated into rhythm */}
-            <div className="flex justify-between items-center w-full max-w-[28rem] mx-auto text-[0.66rem] uppercase tracking-[0.25em] text-[#1E3754]/38 border-t border-[#1E3754]/8 pt-5">
+            <motion.div
+              variants={bottomMetaVariants}
+              className="flex justify-between items-center w-full max-w-[28rem] mx-auto text-[0.66rem] uppercase tracking-[0.25em] text-[#1E3754]/38 border-t border-[#1E3754]/8 pt-5"
+            >
               <span>Stewardship Council</span>
               <span>Est. 2026</span>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* FULLSCREEN SLIDING IMAGE PANEL (Covers the reveal typography initially) */}

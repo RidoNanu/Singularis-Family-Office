@@ -57,24 +57,6 @@ export function AppHeader() {
             </Link>
           ))}
         </nav>
-
-        <a
-          href="#contact"
-          className={cn(
-            'inline-flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.28em] transition-colors duration-500',
-            scrolled
-              ? 'text-[#1E3754]/75 hover:text-[#1E3754]'
-              : 'text-white/80 hover:text-white'
-          )}
-        >
-          Contact
-          <span
-            className={cn(
-              'h-px w-8 transition-all duration-500 hover:w-12',
-              scrolled ? 'bg-[#1E3754]/35' : 'bg-white/40'
-            )}
-          />
-        </a>
       </div>
     </header>
   );
