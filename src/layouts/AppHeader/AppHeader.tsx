@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navigationItems } from '../../constants/navigation';
 import { cn } from '../../utils/cn';
@@ -7,6 +7,14 @@ import { cn } from '../../utils/cn';
 export function AppHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+
+  const handleLinkClick = (path: string) => {
+    setMobileOpen(false);
+    if (location.pathname === path) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -103,6 +111,7 @@ export function AppHeader() {
       <div className="relative z-30 mx-auto flex max-w-[84rem] items-center justify-between px-6 py-5 sm:px-8 lg:px-12 lg:py-5">
         <Link
           to="/"
+          onClick={() => handleLinkClick('/')}
           aria-label="Singularis Family Office home"
           className={cn(
             'flex flex-col items-start leading-none transition-opacity duration-500 hover:opacity-70',
@@ -153,6 +162,7 @@ export function AppHeader() {
             <Link
               key={item.path}
               to={item.path}
+              onClick={() => handleLinkClick(item.path)}
               className={cn(
                 'text-[0.72rem] font-semibold uppercase tracking-[0.28em] transition-colors duration-500',
                 scrolled
@@ -192,7 +202,7 @@ export function AppHeader() {
                 <motion.div key={item.path} variants={menuItemVariants}>
                   <Link
                     to={item.path}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={() => handleLinkClick(item.path)}
                     className="group flex items-baseline py-2 border-b border-[#1E3754]/5"
                   >
                     <span className="text-[1.75rem] font-light uppercase tracking-[0.08em] text-[#1E3754] transition-colors duration-300 group-hover:text-[#1E3754]/60">
