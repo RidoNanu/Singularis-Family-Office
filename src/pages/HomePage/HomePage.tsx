@@ -300,10 +300,10 @@ const beltCards: BeltCard[] = [
   },
 ];
 function BeltCardShell({ card }: { card: BeltCard }) {
-  const shellClass = 'group relative flex-shrink-0 overflow-hidden border-r border-[#1E3754]/10 bg-[#F8F5EF] transition-colors duration-500 hover:bg-[#F3EFE7]';
+  const shellClass = 'group relative h-[23rem] flex-shrink-0 overflow-hidden border-r border-[#1E3754]/10 bg-[#F8F5EF] transition-colors duration-500 hover:bg-[#F3EFE7] sm:h-[16rem]';
 
   return (
-    <article className={shellClass} style={{ width: card.width, height: card.height }}>
+    <article className={shellClass} style={{ width: card.width }}>
       <div className="flex h-full flex-col justify-between p-6 sm:p-7 lg:p-8">
         <div className="space-y-5">
           <div className="flex items-center gap-4">
@@ -371,7 +371,7 @@ export function HomePage() {
         ref={presenceRef}
         id="presence"
         style={reduceMotion ? {} : presenceExit}
-        className="relative w-full min-h-[120vh] flex flex-col justify-between py-24 lg:py-32 xl:py-40 bg-white border-t border-[#1E3754]/6 overflow-hidden"
+        className="relative w-full min-h-[92vh] flex flex-col justify-between py-14 sm:min-h-[108vh] sm:py-20 lg:min-h-[120vh] lg:py-32 xl:py-40 bg-white border-t border-[#1E3754]/6 overflow-hidden"
         initial={reduceMotion ? false : 'hidden'}
         whileInView="visible"
         viewport={{ once: false, amount: 0.2 }}
@@ -386,7 +386,7 @@ export function HomePage() {
           </motion.p>
         </div>
 
-        <div className="w-full max-w-[84rem] mx-auto px-6 sm:px-8 lg:px-12 my-auto py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+        <div className="w-full max-w-[84rem] mx-auto px-6 sm:px-8 lg:px-12 my-auto py-10 sm:py-14 lg:py-20 grid grid-cols-1 gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-20 items-center">
           {/* Left Side: Image Column sliding from Left */}
           <motion.div
             variants={presenceImageLeftVariants}
@@ -481,7 +481,7 @@ export function HomePage() {
 
           <motion.div
             variants={globalRevealVariants}
-            className="relative flex min-h-[60vh] items-end overflow-hidden pt-8"
+            className="relative flex min-h-[72vh] items-start overflow-x-hidden overflow-y-visible pt-4 sm:min-h-[60vh] sm:items-end sm:pt-8"
           >
             <div className="pointer-events-none absolute inset-y-0 left-0 right-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.96),rgba(255,255,255,0.88)_8%,rgba(255,255,255,0)_14%,rgba(255,255,255,0)_86%,rgba(255,255,255,0.88)_92%,rgba(255,255,255,0.96))]" />
 
@@ -508,8 +508,8 @@ export function HomePage() {
       <motion.section
         ref={continuityRef}
         id="continuity"
-        style={reduceMotion ? { paddingTop: '11.25rem', paddingBottom: '11.25rem' } : { paddingTop: '11.25rem', paddingBottom: '11.25rem', ...continuityExit }}
-        className="relative overflow-hidden bg-[#1E3754]"
+        style={reduceMotion ? {} : continuityExit}
+        className="relative overflow-hidden bg-[#1E3754] pt-16 pb-20 sm:pt-20 sm:pb-24 lg:pt-[11.25rem] lg:pb-[11.25rem]"
         initial={reduceMotion ? false : 'hidden'}
         whileInView="visible"
         viewport={{ once: false, amount: 0.2 }}
@@ -533,7 +533,7 @@ export function HomePage() {
           <motion.div
             variants={headingLineVariants}
             custom={0}
-            className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between pb-8 mb-16 lg:mb-20"
+            className="hidden sm:flex sm:flex-row sm:items-end sm:justify-between gap-4 pb-8 mb-16 lg:mb-20"
           >
             <div />
             <motion.p
@@ -602,15 +602,15 @@ export function HomePage() {
             </div>
 
             {/* Right Side: Architectural Image Column (5/12 width) */}
-            <div className="lg:col-span-5 h-full relative rounded-xl overflow-hidden bg-[#F5F5F2] p-4">
+            <div className="order-first mb-6 h-full relative bg-transparent p-0 lg:order-none lg:col-span-5 lg:mb-0 lg:rounded-xl lg:overflow-hidden lg:bg-[#F5F5F2] lg:p-4">
               <motion.div
                 variants={cinematicImageVariants}
-                className="relative aspect-[3/4] lg:aspect-auto lg:absolute lg:inset-0 w-full h-full overflow-hidden rounded-xl bg-[#ebe8e2]"
+                className="relative aspect-[5/4] sm:aspect-[3/4] lg:aspect-auto lg:absolute lg:inset-0 w-full h-full overflow-hidden rounded-[1.25rem] lg:rounded-xl lg:bg-[#ebe8e2]"
               >
                 <img
                   src={continuityImage}
                   alt="Institutional architectural interior"
-                  className="h-full w-full object-cover object-center grayscale-[20%] contrast-[0.96] saturate-[0.9] rounded-xl"
+                  className="h-full w-full object-cover object-center grayscale-[20%] contrast-[0.96] saturate-[0.9]"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_50%,rgba(30,55,84,0.08))]" />
               </motion.div>
