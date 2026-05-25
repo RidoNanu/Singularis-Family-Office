@@ -1,5 +1,5 @@
 import { useState, useRef, RefObject } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { HeroSection } from '../../sections/home/HeroSection';
 import { cn } from '../../utils/cn';
 import serviceImage from '../../assets/imagery/service.jpg';
@@ -26,13 +26,15 @@ type BeltCard = {
 };
 
 // Global Scroll Reveal Variants (Entrance)
+const initialY = typeof window !== 'undefined' && window.innerWidth < 768 ? 20 : 40;
+
 const globalRevealVariants = {
-  hidden: { opacity: 0, y: 60 },
+  hidden: { opacity: 0, y: initialY },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1.2,
+      duration: 1.0,
       ease: easing,
     }
   }
@@ -40,38 +42,35 @@ const globalRevealVariants = {
 
 // Heading Line stagger reveal
 const headingLineVariants = {
-  hidden: { y: 24, opacity: 0 },
-  visible: (i: number = 0) => ({
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 1.2,
-      ease: easing,
-      delay: i * 0.1
-    }
-  })
-};
-
-// Paragraph delay reveal
-const bodyParagraphVariants = {
-  hidden: { y: 15, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 1.0,
       ease: easing,
-      delay: 0.25
+    }
+  }
+};
+
+// Paragraph delay reveal
+const bodyParagraphVariants = {
+  hidden: { y: initialY, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 1.0,
+      ease: easing,
     }
   }
 };
 
 // Cinematic Image reveal
 const cinematicImageVariants = {
-  hidden: { y: 30, scale: 1.02, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
     y: 0,
-    scale: 1,
     opacity: 1,
     transition: {
       duration: 1.0,
@@ -82,39 +81,36 @@ const cinematicImageVariants = {
 
 // Card / Item sequential stagger
 const cardStaggerVariants = {
-  hidden: { y: 60, opacity: 0 },
-  visible: (i: number = 0) => ({
+  hidden: { y: initialY, opacity: 0 },
+  visible: {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 1.0,
       ease: easing,
-      delay: i * 0.1
     }
-  })
+  }
 };
 
 const timelineLeftVariants = {
-  hidden: { x: -40, y: 30, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
-    x: 0,
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 1.0,
       ease: easing
     }
   }
 };
 
 const timelineRightVariants = {
-  hidden: { x: 40, y: 30, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
-    x: 0,
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 1.0,
       ease: easing
     }
   }
@@ -125,7 +121,7 @@ const spineVariants = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 2.0,
+      duration: 1.5,
       ease: 'linear' as const
     }
   }
@@ -159,23 +155,22 @@ const nodeVariants = {
 };
 
 const contactStatementVariants = {
-  hidden: { y: 40, opacity: 0, letterSpacing: '0.02em' },
+  hidden: { y: initialY, opacity: 0, letterSpacing: '0.02em' },
   visible: {
     y: 0,
     opacity: 1,
     letterSpacing: '-0.05em',
     transition: {
-      duration: 1.4,
+      duration: 1.2,
       ease: easing
     }
   }
 };
 
 const presenceImageLeftVariants = {
-  hidden: { x: -30, scale: 1.02, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
-    x: 0,
-    scale: 1,
+    y: 0,
     opacity: 1,
     transition: {
       duration: 1.0,
@@ -185,15 +180,15 @@ const presenceImageLeftVariants = {
 };
 
 const presenceContentRightVariants = {
-  hidden: { x: 60, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
-    x: 0,
+    y: 0,
     opacity: 1,
     transition: {
-      duration: 1.4,
+      duration: 1.0,
       ease: easing,
-      staggerChildren: 0.1,
-      delayChildren: 0.1
+      staggerChildren: 0.08,
+      delayChildren: 0.08
     }
   }
 };
@@ -394,14 +389,7 @@ export function HomePage() {
   const philosophyExit = getExitStyles(philosophyRef);
   const continuityExit = getExitStyles(continuityRef);
 
-  const { scrollYProgress: operationsScroll } = useScroll({
-    target: operationsRef,
-    offset: ["start end", "end start"]
-  });
-  const operationsParallaxY = useTransform(operationsScroll, [0, 1], [60, -60]);
-  const operationsSmoothY = useSpring(operationsParallaxY, { stiffness: 90, damping: 25 });
-  const operationsOpacity = useTransform(operationsScroll, [0.8, 0.98], [1, 0]);
-  const operationsStyle = { y: operationsSmoothY, opacity: operationsOpacity };
+  const operationsStyle = getExitStyles(operationsRef);
 
   const contactExit = getExitStyles(contactRef);
 
@@ -421,7 +409,6 @@ export function HomePage() {
         <div className="w-full flex justify-center px-6 sm:px-8 lg:px-12 overflow-hidden">
           <motion.p
             variants={headingLineVariants}
-            custom={0}
             className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40"
           >
             INSTITUTIONAL PRESENCE
@@ -455,22 +442,22 @@ export function HomePage() {
           >
             <h2 className="text-[#1E3754] font-light tracking-[-0.05em] text-[1.6rem] sm:text-[clamp(2.4rem,4.8vw,4.2rem)] leading-[1.05] max-w-[15ch] flex flex-col">
               <span className="overflow-hidden inline-block py-1">
-                <motion.span variants={headingLineVariants} custom={1} className="inline-block">
+                <motion.span variants={headingLineVariants} transition={{ delay: 0.06 }} className="inline-block">
                   A quiet institution with
                 </motion.span>
               </span>
               <span className="overflow-hidden inline-block py-1">
-                <motion.span variants={headingLineVariants} custom={2} className="inline-block">
+                <motion.span variants={headingLineVariants} transition={{ delay: 0.12 }} className="inline-block">
                   structure already in
                 </motion.span>
               </span>
               <span className="overflow-hidden inline-block py-1">
-                <motion.span variants={headingLineVariants} custom={3} className="inline-block">
+                <motion.span variants={headingLineVariants} transition={{ delay: 0.18 }} className="inline-block">
                   place.
                 </motion.span>
               </span>
             </h2>
-            <motion.div variants={headingLineVariants} custom={4} className="my-8 h-px w-20 bg-[#1E3754]/14" />
+            <motion.div variants={headingLineVariants} transition={{ delay: 0.24 }} className="my-8 h-px w-20 bg-[#1E3754]/14" />
             <motion.p variants={bodyParagraphVariants} className="max-w-[28rem] text-[0.92rem] sm:text-[1.08rem] font-light leading-[1.6] text-[#1E3754]/68">
               Singularis Family Office operates through measured governance, institutional pacing, and long-term operational clarity. The office is intentionally restrained in tone, allowing continuity and stewardship to remain central to every decision structure.
             </motion.p>
@@ -500,25 +487,25 @@ export function HomePage() {
           <div className="flex min-h-[40vh] flex-col items-center justify-center text-center">
             <motion.p
               variants={headingLineVariants}
-              custom={0}
               className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-[#1E3754]/44"
             >
               GOVERNANCE & STRUCTURAL OVERSIGHT
             </motion.p>
             <h2 className="mt-8 mx-auto max-w-[14ch] text-[clamp(3rem,6vw,5.4rem)] font-light leading-[0.92] tracking-[-0.06em] text-[#1E3754] flex flex-col items-center">
               <span className="overflow-hidden inline-block py-1">
-                <motion.span variants={headingLineVariants} custom={1} className="inline-block">
+                <motion.span variants={headingLineVariants} transition={{ delay: 0.06 }} className="inline-block">
                   Structure that remains
                 </motion.span>
               </span>
               <span className="overflow-hidden inline-block py-1">
-                <motion.span variants={headingLineVariants} custom={2} className="inline-block">
+                <motion.span variants={headingLineVariants} transition={{ delay: 0.12 }} className="inline-block">
                   readable.
                 </motion.span>
               </span>
             </h2>
             <motion.p
               variants={bodyParagraphVariants}
+              transition={{ delay: 0.18 }}
               className="mt-8 mx-auto max-w-[46rem] text-[1rem] leading-[2] text-[#1E3754]/70 sm:text-[1.08rem]"
             >
               Institutional systems should reduce operational friction, preserve clarity, and sustain continuity across time. The office operates through disciplined cadence, visible governance structures, and restrained execution frameworks.
@@ -582,12 +569,12 @@ export function HomePage() {
           {/* ── Institutional Header (eyebrow removed) ── */}
           <motion.div
             variants={headingLineVariants}
-            custom={0}
             className="hidden sm:flex sm:flex-row sm:items-end sm:justify-between gap-4 pb-8 mb-16 lg:mb-20"
           >
             <div />
             <motion.p
               variants={bodyParagraphVariants}
+              transition={{ delay: 0.12 }}
               className="max-w-[26rem] text-[0.88rem] leading-[1.75] text-[#F5F5F2]/55 text-right hidden sm:block"
             >
               Structured continuity depends on governance systems<br />
@@ -631,7 +618,7 @@ export function HomePage() {
                   <motion.div
                     key={item.mark}
                     variants={cardStaggerVariants}
-                    custom={idx + 1}
+                    transition={{ delay: 0.12 + idx * 0.08 }}
                     className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4 sm:gap-6 items-start"
                   >
                     <span className="text-[0.64rem] font-mono text-white/30 mt-1">{item.mark}</span>
@@ -698,12 +685,12 @@ export function HomePage() {
               <p className="text-[0.72rem] font-medium uppercase tracking-[0.34em] text-[#1E3754]/52">STRATEGIC OPERATIONAL COORDINATION</p>
               <h2 className="mt-6 mx-auto max-w-[56ch] text-[clamp(40px,6vw,72px)] font-light leading-[0.92] tracking-[-0.02em] text-[#1E3754] flex flex-col items-center">
                 <span className="overflow-hidden inline-block py-1">
-                  <motion.span variants={headingLineVariants} custom={1} className="inline-block">
+                  <motion.span variants={headingLineVariants} transition={{ delay: 0.06 }} className="inline-block">
                     A disciplined
                   </motion.span>
                 </span>
                 <span className="overflow-hidden inline-block py-1">
-                  <motion.span variants={headingLineVariants} custom={2} className="inline-block">
+                  <motion.span variants={headingLineVariants} transition={{ delay: 0.12 }} className="inline-block">
                     operational rhythm.
                   </motion.span>
                 </span>
@@ -804,7 +791,7 @@ export function HomePage() {
             {/* Left Side: Statement & Actions */}
             <div className="flex flex-col justify-between py-2">
               <div className="space-y-6">
-                <motion.span variants={headingLineVariants} custom={0} className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-[#1E3754]/52 block">
+                <motion.span variants={headingLineVariants} className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-[#1E3754]/52 block">
                   QUIET INVITATION
                 </motion.span>
                 <motion.h2 variants={contactStatementVariants} className="text-[clamp(2.2rem,4.2vw,3.6rem)] font-light leading-[1.1] tracking-[-0.05em] text-[#1E3754] max-w-[16ch]">

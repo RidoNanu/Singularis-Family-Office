@@ -52,7 +52,7 @@ export function AppFooter() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 1.2,
+        duration: 1.0,
         ease: easing,
         staggerChildren: 0.08,
         delayChildren: 0.08,
@@ -61,16 +61,15 @@ export function AppFooter() {
   };
 
   const itemVariants = {
-    hidden: { y: 18, opacity: 0 },
-    visible: (i: number = 0) => ({
+    hidden: { y: 24, opacity: 0 },
+    visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.9,
+        duration: 1.0,
         ease: easing,
-        delay: i * 0.05,
       },
-    }),
+    },
   };
 
   const currentYear = new Date().getFullYear();
@@ -88,7 +87,6 @@ export function AppFooter() {
           <div className="flex justify-end border-b border-white/10 pb-10">
             <motion.div
               variants={itemVariants}
-              custom={0}
               className="w-full space-y-5 lg:max-w-[34rem]"
             >
               <p className="text-[0.76rem] font-semibold uppercase tracking-[0.28em] text-[#F5F5F2]/44">
@@ -116,7 +114,7 @@ export function AppFooter() {
           </div>
 
           <div className="grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
-            <motion.div variants={itemVariants} custom={1} className="space-y-4">
+            <motion.div variants={itemVariants} className="space-y-4">
               <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-[#F5F5F2]/42">
                 Contact Information
               </h3>
@@ -136,7 +134,7 @@ export function AppFooter() {
               </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} custom={2} className="space-y-4">
+            <motion.div variants={itemVariants} className="space-y-4">
               <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-[#F5F5F2]/42">
                 Company
               </h3>
@@ -154,7 +152,7 @@ export function AppFooter() {
               </ul>
             </motion.div>
 
-            <motion.div variants={itemVariants} custom={3} className="space-y-4">
+            <motion.div variants={itemVariants} className="space-y-4">
               <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-[#F5F5F2]/42">
                 Help
               </h3>
@@ -172,7 +170,7 @@ export function AppFooter() {
               </ul>
             </motion.div>
 
-            <motion.div variants={itemVariants} custom={4} className="space-y-4">
+            <motion.div variants={itemVariants} className="space-y-4">
               <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-[#F5F5F2]/42">
                 Follow Us
               </h3>
@@ -194,7 +192,6 @@ export function AppFooter() {
 
           <motion.div
             variants={itemVariants}
-            custom={5}
             className="flex flex-col gap-4 border-t border-white/10 pt-6 text-[0.72rem] uppercase tracking-[0.22em] text-[#F5F5F2]/40 sm:flex-row sm:items-center sm:justify-between"
           >
             <p>© {currentYear} Singularis Family Office. All rights reserved.</p>

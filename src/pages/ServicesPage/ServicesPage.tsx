@@ -1,55 +1,56 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { useRef, RefObject } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import heroService from '../../assets/imagery/hero_service.jpg';
 import strucImage from '../../assets/imagery/struc.jpg';
 
 const easing = [0.22, 1, 0.36, 1] as const;
 
+const initialY = typeof window !== 'undefined' && window.innerWidth < 768 ? 20 : 40;
+
 const headingVariants = {
-  hidden: { y: 20, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 1.0,
       ease: easing,
     },
   },
 };
 
 const bodyParagraphVariants = {
-  hidden: { y: 15, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 1.0,
       ease: easing,
-      delay: 0.3,
     },
   },
 };
 
 const fadeUpVariants = {
-  hidden: { y: 20, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 1.0,
       ease: easing,
-      delay: 0.3,
     },
   },
 };
 
 const cardVariants = {
-  hidden: { y: 30, opacity: 0 },
+  hidden: { y: initialY, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 1.0,
       ease: easing,
     },
   },
@@ -63,7 +64,6 @@ const lineRevealVariants = {
     transition: {
       duration: 0.8,
       ease: easing,
-      delay: 0.2,
     },
   },
 };
@@ -77,11 +77,9 @@ const nodeVariants = {
     transition: {
       duration: 0.55,
       ease: easing,
-      delay: 0.25,
     },
   },
 };
-
 
 const timelineItems = [
   {
@@ -138,10 +136,32 @@ const generationalSteps = [
 export function ServicesPage() {
   const reduceMotion = useReducedMotion();
 
+  const heroRef = useRef<HTMLDivElement>(null);
+  const continuityRef = useRef<HTMLDivElement>(null);
+  const rhythmRef = useRef<HTMLDivElement>(null);
+  const closingRef = useRef<HTMLDivElement>(null);
+
+  const getExitStyles = (ref: RefObject<HTMLDivElement | null>) => {
+    const { scrollYProgress } = useScroll({
+      target: ref,
+      offset: ["start end", "end start"]
+    });
+    const exitY = useTransform(scrollYProgress, [0.75, 0.95], [0, -40]);
+    const exitOpacity = useTransform(scrollYProgress, [0.75, 0.95], [1, 0]);
+    return { y: exitY, opacity: exitOpacity };
+  };
+
+  const heroExit = getExitStyles(heroRef);
+  const continuityExit = getExitStyles(continuityRef);
+  const rhythmExit = getExitStyles(rhythmRef);
+  const closingExit = getExitStyles(closingRef);
+
   return (
     <main className="bg-white overflow-hidden pt-0">
       {/* ── SECTION 01 — HERO ── */}
       <motion.section
+        ref={heroRef}
+        style={reduceMotion ? {} : heroExit}
         className="relative bg-neutral-900 pt-32 pb-24 sm:pt-40 sm:pb-32 lg:pt-48 lg:pb-40 text-center px-6 overflow-hidden"
         initial={reduceMotion ? false : 'hidden'}
         whileInView="visible"
@@ -165,13 +185,14 @@ export function ServicesPage() {
           </motion.span>
           <motion.h1
             variants={headingVariants}
-            transition={{ delay: 0.15 }}
+            transition={{ delay: 0.08, duration: 1.0, ease: easing }}
             className="mt-6 text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-none tracking-[-0.03em] text-white font-serif-elegant select-none max-w-[48rem]"
           >
             Structures designed for continuity.
           </motion.h1>
           <motion.p
             variants={bodyParagraphVariants}
+            transition={{ delay: 0.16, duration: 1.0, ease: easing }}
             className="mt-8 max-w-[32rem] text-[0.98rem] sm:text-[1.06rem] font-light leading-[1.75] text-white/80"
           >
             Singularis Family Office approaches stewardship through governance clarity, operational coordination, and long-term institutional preservation.
@@ -179,6 +200,7 @@ export function ServicesPage() {
 
           <motion.div
             variants={fadeUpVariants}
+            transition={{ delay: 0.24, duration: 1.0, ease: easing }}
             className="flex flex-wrap justify-center gap-x-12 gap-y-4 mt-20 border-t border-white/15 pt-6 w-full max-w-[40rem]"
           >
             {['PRIVATE COORDINATION', 'GOVERNANCE SYSTEMS', 'LONG-TERM ALIGNMENT'].map((meta) => (
@@ -192,6 +214,8 @@ export function ServicesPage() {
 
       {/* ── SECTION 02 — STRUCTURED CONTINUITY ── */}
       <motion.section
+        ref={continuityRef}
+        style={reduceMotion ? {} : continuityExit}
         className="bg-[#FAF9F6] py-24 sm:py-32 lg:py-40 px-6 sm:px-12 lg:px-16 border-t border-[#1E3754]/8 overflow-hidden"
         initial={reduceMotion ? false : 'hidden'}
         whileInView="visible"
@@ -208,7 +232,7 @@ export function ServicesPage() {
             </motion.span>
             <motion.h2
               variants={headingVariants}
-              transition={{ delay: 0.15 }}
+              transition={{ delay: 0.08, duration: 1.0, ease: easing }}
               className="mt-6 text-[#1E3754] text-[clamp(2rem,4.5vw,3.6rem)] font-light leading-[1.1] tracking-[-0.02em] font-serif-elegant max-w-[40rem]"
             >
               Institutional Coordination Across Generations
@@ -234,6 +258,7 @@ export function ServicesPage() {
                     {/* Central connection point (node on the vertical line) */}
                     <motion.div
                       variants={nodeVariants}
+                      transition={{ delay: 0.05, duration: 0.55, ease: easing }}
                       className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center"
                     >
                       <div className="h-4 w-4 rounded-full border border-[#1E3754]/30 bg-[#FAF9F6] flex items-center justify-center shadow-[0_2px_6px_rgba(30,55,84,0.05)]">
@@ -245,6 +270,7 @@ export function ServicesPage() {
                     {isLeft && (
                       <motion.div
                         variants={lineRevealVariants}
+                        transition={{ delay: 0.15, duration: 0.8, ease: easing }}
                         className="absolute right-1/2 w-3 md:w-[3rem] h-px border-t border-dashed border-[#1E3754]/30 top-1/2 -translate-y-1/2 origin-right"
                       />
                     )}
@@ -253,6 +279,7 @@ export function ServicesPage() {
                     {!isLeft && (
                       <motion.div
                         variants={lineRevealVariants}
+                        transition={{ delay: 0.15, duration: 0.8, ease: easing }}
                         className="absolute left-1/2 w-3 md:w-[3rem] h-px border-t border-dashed border-[#1E3754]/30 top-1/2 -translate-y-1/2 origin-left"
                       />
                     )}
@@ -262,6 +289,7 @@ export function ServicesPage() {
                       {isLeft && (
                         <motion.div
                           variants={cardVariants}
+                          transition={{ delay: 0.25, duration: 1.0, ease: easing }}
                           className="relative bg-white border border-[#1E3754]/8 rounded-[12px] md:rounded-[24px] p-3 md:p-10 shadow-[0_8px_30px_rgba(30,55,84,0.02)] hover:shadow-[0_12px_40px_rgba(30,55,84,0.05)] w-full max-w-[390px] text-left transition-all duration-700 ease-out group"
                           style={{ rotate: reduceMotion ? 0 : step.rotation }}
                         >
@@ -304,6 +332,7 @@ export function ServicesPage() {
                       {!isLeft && (
                         <motion.div
                           variants={cardVariants}
+                          transition={{ delay: 0.25, duration: 1.0, ease: easing }}
                           className="relative bg-white border border-[#1E3754]/8 rounded-[12px] md:rounded-[24px] p-3 md:p-10 shadow-[0_8px_30px_rgba(30,55,84,0.02)] hover:shadow-[0_12px_40px_rgba(30,55,84,0.05)] w-full max-w-[390px] text-left transition-all duration-700 ease-out group"
                           style={{ rotate: reduceMotion ? 0 : step.rotation }}
                         >
@@ -350,6 +379,8 @@ export function ServicesPage() {
 
       {/* ── SECTION 03 — OPERATIONAL RHYTHM ── */}
       <motion.section
+        ref={rhythmRef}
+        style={reduceMotion ? {} : rhythmExit}
         className="bg-white py-24 sm:py-32 lg:py-40 px-6 sm:px-12 lg:px-16 border-t border-[#1E3754]/8"
         initial={reduceMotion ? false : 'hidden'}
         whileInView="visible"
@@ -361,6 +392,7 @@ export function ServicesPage() {
             <div className="col-span-12 md:col-span-5 lg:col-span-6">
               <motion.div
                 variants={cardVariants}
+                transition={{ delay: 0.12, duration: 1.0, ease: easing }}
                 className="relative overflow-hidden rounded-[24px] border border-[#1E3754]/10 shadow-[0_12px_40px_rgba(30,55,84,0.03)] aspect-[4/5] md:h-[620px] w-full"
               >
                 <img
@@ -387,10 +419,11 @@ export function ServicesPage() {
                 {/* Vertical line running down the list */}
                 <div className="absolute left-[9px] top-2 bottom-2 w-[1px] bg-[#1E3754]/15" />
 
-                {timelineItems.map((phase) => (
+                {timelineItems.map((phase, idx) => (
                   <motion.div
                     key={phase.mark}
                     variants={cardVariants}
+                    transition={{ delay: 0.08 + idx * 0.08, duration: 1.0, ease: easing }}
                     className="relative flex flex-col items-start"
                   >
                     {/* Circular node anchor */}
@@ -426,6 +459,8 @@ export function ServicesPage() {
 
       {/* ── SECTION 04 — CLOSING ── */}
       <motion.section
+        ref={closingRef}
+        style={reduceMotion ? {} : closingExit}
         className="bg-white py-28 sm:py-36 lg:py-48 px-6 sm:px-12 lg:px-16 text-center border-t border-[#1E3754]/8"
         initial={reduceMotion ? false : 'hidden'}
         whileInView="visible"
@@ -440,19 +475,23 @@ export function ServicesPage() {
           </motion.span>
           <motion.h2
             variants={headingVariants}
-            transition={{ delay: 0.15 }}
+            transition={{ delay: 0.08, duration: 1.0, ease: easing }}
             className="mt-6 text-[#1E3754] text-[clamp(2rem,5.5vw,4.5rem)] font-light leading-none tracking-[-0.03em] font-serif-elegant select-none"
           >
             Quiet systems. Visible structure.
           </motion.h2>
           <motion.p
-            variants={headingVariants}
-            transition={{ delay: 0.3 }}
+            variants={bodyParagraphVariants}
+            transition={{ delay: 0.16, duration: 1.0, ease: easing }}
             className="mt-8 max-w-[28rem] text-[0.98rem] sm:text-[1.04rem] font-light leading-[1.75] text-[#1E3754]/75"
           >
             Clarity, continuity, and governance alignment remain central to every layer of coordination.
           </motion.p>
-          <motion.div variants={fadeUpVariants} className="mt-12">
+          <motion.div
+            variants={fadeUpVariants}
+            transition={{ delay: 0.24, duration: 1.0, ease: easing }}
+            className="mt-12"
+          >
             <Link
               to="/#contact"
               className="inline-block px-10 py-4 border border-[#1E3754] text-[#1E3754] text-[0.66rem] font-semibold uppercase tracking-[0.24em] hover:bg-[#1E3754] hover:text-white transition-all duration-500 ease-out"
