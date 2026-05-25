@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
 import heroImage from '../../assets/imagery/i3.png';
+import heroImageMobile from '../../assets/imagery/i33.png';
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
@@ -137,7 +138,7 @@ export function HeroSection() {
             className="absolute top-[17.5vh] bottom-[17.5vh] left-0 right-0 z-20 overflow-hidden bg-white"
           >
             <img
-              src={heroImage}
+              src={heroImageMobile}
               alt="Interior study"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
