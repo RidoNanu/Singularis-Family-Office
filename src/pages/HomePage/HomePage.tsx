@@ -196,9 +196,7 @@ const presenceContentRightVariants = {
   }
 };
 
-const CONNECTOR_WIDTH = '140px';
-const SPINE_COLOR = 'rgba(30,55,84,0.20)';
-const CONNECTOR_COLOR = 'rgba(30,55,84,0.12)';
+
 
 const operationsItems = [
   {
@@ -371,7 +369,7 @@ export function HomePage() {
         ref={presenceRef}
         id="presence"
         style={reduceMotion ? {} : presenceExit}
-        className="relative w-full min-h-[92vh] flex flex-col justify-between py-14 sm:min-h-[108vh] sm:py-20 lg:min-h-[120vh] lg:py-32 xl:py-40 bg-white border-t border-[#1E3754]/6 overflow-hidden"
+        className="relative w-full min-h-[72vh] flex flex-col justify-between py-8 sm:min-h-[108vh] sm:py-20 lg:min-h-[120vh] lg:py-32 xl:py-40 bg-white border-t border-[#1E3754]/6 overflow-hidden"
         initial={reduceMotion ? false : 'hidden'}
         whileInView="visible"
         viewport={{ once: false, amount: 0.2 }}
@@ -386,13 +384,14 @@ export function HomePage() {
           </motion.p>
         </div>
 
-        <div className="w-full max-w-[84rem] mx-auto px-6 sm:px-8 lg:px-12 my-auto py-10 sm:py-14 lg:py-20 grid grid-cols-1 gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-20 items-center">
+        <div className="w-full max-w-[84rem] mx-auto px-6 sm:px-8 lg:px-12 my-auto py-6 sm:py-14 lg:py-20 grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-20 items-center">
           {/* Left Side: Image Column sliding from Left */}
           <motion.div
             variants={presenceImageLeftVariants}
             className="lg:col-span-5 w-full flex justify-center overflow-hidden rounded-xl"
           >
-            <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-xl bg-[#1E3754]/5 border border-[#1E3754]/8">
+            <div className="relative w-full aspect-[3/4] sm:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-xl bg-[#1E3754]/5 border border-[#1E3754]/8">
+              
               <img
                 src={serviceImage}
                 alt="Institutional Presence"
@@ -407,7 +406,7 @@ export function HomePage() {
             variants={presenceContentRightVariants}
             className="lg:col-span-7 flex flex-col items-start text-left lg:pl-4"
           >
-            <h2 className="text-[#1E3754] font-light tracking-[-0.05em] text-[clamp(2.4rem,4.8vw,4.2rem)] leading-[0.95] max-w-[15ch] flex flex-col">
+            <h2 className="text-[#1E3754] font-light tracking-[-0.05em] text-[1.6rem] sm:text-[clamp(2.4rem,4.8vw,4.2rem)] leading-[1.05] max-w-[15ch] flex flex-col">
               <span className="overflow-hidden inline-block py-1">
                 <motion.span variants={headingLineVariants} custom={1} className="inline-block">
                   A quiet institution with
@@ -425,10 +424,10 @@ export function HomePage() {
               </span>
             </h2>
             <motion.div variants={headingLineVariants} custom={4} className="my-8 h-px w-20 bg-[#1E3754]/14" />
-            <motion.p variants={bodyParagraphVariants} className="max-w-[28rem] text-[1.02rem] sm:text-[1.08rem] font-light leading-[1.75] text-[#1E3754]/68">
+            <motion.p variants={bodyParagraphVariants} className="max-w-[28rem] text-[0.92rem] sm:text-[1.08rem] font-light leading-[1.6] text-[#1E3754]/68">
               Singularis Family Office operates through measured governance, institutional pacing, and long-term operational clarity. The office is intentionally restrained in tone, allowing continuity and stewardship to remain central to every decision structure.
             </motion.p>
-            <motion.p variants={bodyParagraphVariants} className="mt-6 text-[0.8rem] uppercase tracking-[0.2em] text-[#1E3754]/45 font-medium leading-[1.8]">
+            <motion.p variants={bodyParagraphVariants} className="mt-6 text-[0.66rem] sm:text-[0.8rem] uppercase tracking-[0.2em] text-[#1E3754]/45 font-medium leading-[1.6]">
               Quiet oversight.<br />
               Visible continuity.<br />
               Measured governance.
@@ -625,12 +624,12 @@ export function HomePage() {
         ref={operationsRef}
         id="operations"
         style={reduceMotion ? {} : operationsStyle}
-        className={sectionSpacing}
+        className={`${sectionSpacing} overflow-x-hidden`}
         initial={reduceMotion ? false : 'hidden'}
         whileInView="visible"
         viewport={{ once: false, amount: 0.2 }}
       >
-        <div className={pageFrame}>
+        <div className="mx-auto max-w-[92rem] px-2 sm:px-8 lg:px-12">
           <div className="mx-auto max-w-[92rem] relative">
 
             {/* Background atmosphere words (very low opacity) */}
@@ -661,14 +660,13 @@ export function HomePage() {
             {/* Sequence area with center spine */}
             <div className="relative mt-16 lg:mt-20">
               {/* center spine (one thin line) */}
-              <motion.div
-                variants={spineVariants}
-                className="absolute left-1/2 top-0 bottom-0 transform -translate-x-1/2"
-                style={{ width: '2px', backgroundColor: SPINE_COLOR }}
-              />
+                <motion.div
+                  variants={spineVariants}
+                  className="absolute left-1/2 top-0 bottom-0 transform -translate-x-1/2 w-[1px] sm:w-[3px] bg-[#1E3754]/[0.14] sm:bg-[#1E3754]/[0.30]"
+                />
 
-              <div className="relative">
-                <div className="space-y-20 lg:space-y-24">
+                <div className="relative">
+                <div className="space-y-12 sm:space-y-20 lg:space-y-24">
                   {operationsItems.map((phase, i) => {
                     const isLeft = i % 2 === 0;
                     return (
@@ -678,56 +676,52 @@ export function HomePage() {
                         whileInView="visible"
                         variants={isLeft ? timelineLeftVariants : timelineRightVariants}
                         viewport={{ once: false, amount: 0.35 }}
-                        className="grid grid-cols-1 lg:grid-cols-12 items-start gap-4"
+                        className="grid grid-cols-12 items-start gap-1 sm:gap-4"
                       >
                         {/* Left column (content for left items) */}
-                        <div className={`lg:col-span-5 ${isLeft ? 'lg:text-right lg:pr-8' : 'lg:col-start-1 lg:invisible'}`}>
+                        <div className={`col-span-5 ${isLeft ? 'text-right pr-1 sm:pr-8' : 'col-start-1 invisible'}`}>
                           {isLeft ? (
-                            <div className="max-w-[44ch] ml-auto">
-                              <div className="text-[0.92rem] font-mono text-[#1E3754]/30">{phase.mark}</div>
-                              <h3 className="mt-2 text-[clamp(28px,3.6vw,36px)] font-medium text-[#1E3754]">{phase.heading}</h3>
-                              <p className="mt-3 text-[clamp(18px,1.2vw,20px)] leading-[1.6] text-[#1E3754]/75 whitespace-pre-line">{phase.body}</p>
-                              <div className="mt-3 text-[0.72rem] uppercase tracking-[0.28em] text-[#1E3754]/40">{phase.rightMeta}</div>
+                            <div className="max-w-full sm:max-w-[44ch] lg:ml-auto">
+                              <div className="text-[0.58rem] sm:text-[0.92rem] font-mono text-[#1E3754]/30">{phase.mark}</div>
+                              <h3 className="mt-1 sm:mt-2 text-[11px] sm:text-[clamp(28px,3.6vw,36px)] font-medium text-[#1E3754] leading-[1.1] sm:leading-[1.0]">{phase.heading}</h3>
+                              <p className="mt-1.5 sm:mt-3 text-[9px] sm:text-[clamp(18px,1.2vw,20px)] leading-[1.35] sm:leading-[1.6] text-[#1E3754]/75 whitespace-pre-line break-words">{phase.body}</p>
+                              <div className="mt-1.5 sm:mt-3 text-[0.52rem] sm:text-[0.72rem] uppercase tracking-[0.15em] sm:tracking-[0.28em] text-[#1E3754]/40">{phase.rightMeta}</div>
                             </div>
                           ) : null}
                         </div>
 
                         {/* Center connector column */}
-                        <div className="lg:col-span-2 flex justify-center">
+                        <div className="col-span-2 flex justify-center">
                           <div className="relative w-full flex justify-center items-start">
                             {/* horizontal connector from spine to node (fixed equal length, anchors at center) */}
                             <motion.div
                               variants={connectorVariants}
-                              className="absolute"
+                              className="absolute h-[1.5px] sm:h-[3px] bg-[#1E3754]/[0.12] sm:bg-[#1E3754]/[0.22] w-[24px] sm:w-[140px] top-[14px] sm:top-[32px]"
                               style={{
-                                top: '32px',
-                                height: '2px',
-                                backgroundColor: CONNECTOR_COLOR,
-                                width: CONNECTOR_WIDTH,
                                 ...(isLeft ? { right: '50%' } : { left: '50%' }),
                                 transformOrigin: isLeft ? 'right center' : 'left center'
                               }}
                             />
 
-                            {/* circular node centered on the spine */}
-                            <motion.div
-                              variants={nodeVariants}
-                              className="relative z-10 mt-0"
-                              style={{ left: '50%', transform: 'translateX(-50%)' }}
-                            >
-                              <div className="w-4 h-4 rounded-full bg-white border border-[#1E3754]/20 shadow-sm" />
-                            </motion.div>
+                            {/* circular node anchored exactly where the connector meets the spine */}
+                            <div className="absolute left-1/2 z-10 -translate-x-1/2 top-[9px] sm:top-[24px]">
+                              <motion.div variants={nodeVariants} className="flex items-center justify-center">
+                                <div className="flex h-2.5 w-2.5 sm:h-5 sm:w-5 items-center justify-center rounded-full border border-[#1E3754]/24 bg-white shadow-[0_4px_12px_rgba(30,55,84,0.06)]">
+                                  <div className="h-0.5 w-0.5 sm:h-1.5 sm:w-1.5 rounded-full bg-[#1E3754]/36" />
+                                </div>
+                              </motion.div>
+                            </div>
                           </div>
                         </div>
 
                         {/* Right column (content for right items) */}
-                        <div className={`lg:col-span-5 ${!isLeft ? 'lg:text-left lg:pl-8' : 'lg:col-start-8 lg:invisible'}`}>
+                        <div className={`col-span-5 ${!isLeft ? 'text-left pl-1 sm:pl-8' : 'col-start-8 invisible'}`}>
                           {!isLeft ? (
-                            <div className="max-w-[44ch]">
-                              <div className="text-[0.92rem] font-mono text-[#1E3754]/30">{phase.mark}</div>
-                              <h3 className="mt-2 text-[clamp(28px,3.6vw,36px)] font-medium text-[#1E3754]">{phase.heading}</h3>
-                              <p className="mt-3 text-[clamp(18px,1.2vw,20px)] leading-[1.6] text-[#1E3754]/75 whitespace-pre-line">{phase.body}</p>
-                              <div className="mt-3 text-[0.72rem] uppercase tracking-[0.28em] text-[#1E3754]/40">{phase.rightMeta}</div>
+                            <div className="max-w-full sm:max-w-[44ch]">
+                              <div className="text-[0.58rem] sm:text-[0.92rem] font-mono text-[#1E3754]/30">{phase.mark}</div>
+                              <h3 className="mt-1 sm:mt-2 text-[11px] sm:text-[clamp(28px,3.6vw,36px)] font-medium text-[#1E3754] leading-[1.1] sm:leading-[1.0]">{phase.heading}</h3>
+                              <p className="mt-1.5 sm:mt-3 text-[9px] sm:text-[clamp(18px,1.2vw,20px)] leading-[1.35] sm:leading-[1.6] text-[#1E3754]/75 whitespace-pre-line break-words">{phase.body}</p>
+                              <div className="mt-1.5 sm:mt-3 text-[0.52rem] sm:text-[0.72rem] uppercase tracking-[0.15em] sm:tracking-[0.28em] text-[#1E3754]/40">{phase.rightMeta}</div>
                             </div>
                           ) : null}
                         </div>
