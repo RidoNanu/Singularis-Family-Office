@@ -14,7 +14,7 @@ function ScrollToTop() {
 
 export function AppRouter() {
   return (
-    <BrowserRouter basename="/Singularis-Family-Office">
+    <BrowserRouter>
       <ScrollToTop />
       <Routes>
         {routeConfig.map((route) => (
