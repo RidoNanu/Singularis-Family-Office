@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navigationItems } from '../../constants/navigation';
 import { cn } from '../../utils/cn';
+import logoImage from '../../assets/imagery/trans_logo.png';
 
 export function AppHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -114,17 +115,16 @@ export function AppHeader() {
           to="/"
           onClick={() => handleLinkClick('/')}
           aria-label="Singularis Family Office home"
-          className={cn(
-            'flex flex-col items-start leading-none transition-opacity duration-500 hover:opacity-70',
-            scrolled || mobileOpen ? 'text-[#1E3754]' : 'text-[#1E3754] md:text-white'
-          )}
+          className="transition-opacity duration-500 hover:opacity-70 flex items-center"
         >
-          <span className="text-[1.12rem] font-light uppercase tracking-[0.26em] sm:text-[1.24rem]">
-            Singularis
-          </span>
-          <span className="mt-1 text-[0.46rem] font-semibold uppercase tracking-[0.42em] opacity-80 sm:text-[0.52rem]">
-            Family Office
-          </span>
+          <img
+            src={logoImage}
+            alt="Singularis Family Office Logo"
+            className={cn(
+              "h-9 sm:h-10 w-auto object-contain transition-all duration-500",
+              scrolled || mobileOpen ? "" : "md:brightness-0 md:invert"
+            )}
+          />
         </Link>
 
         <button
