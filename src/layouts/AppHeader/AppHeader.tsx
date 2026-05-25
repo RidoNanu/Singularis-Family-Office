@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { navigationItems } from '../../constants/navigation';
 import { cn } from '../../utils/cn';
 
@@ -31,24 +32,81 @@ export function AppHeader() {
     };
   }, []);
 
+  // Prevent background scrolling when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
+  const easing = [0.22, 1, 0.36, 1] as const;
+
+  const menuOverlayVariants = {
+    hidden: { opacity: 0, y: '-100%' },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: easing,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: '-100%',
+      transition: {
+        duration: 0.4,
+        ease: easing,
+      },
+    },
+  };
+
+  const menuListVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.15,
+      },
+    },
+  };
+
+  const menuItemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: easing,
+      },
+    },
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-40 w-full overflow-hidden">
-      {/* Sliding white background panel (reveals/slides from top on scroll) */}
+      {/* Sliding white background panel (always visible on mobile, reveals/slides from top on desktop) */}
       <div
         className={cn(
           'absolute inset-0 z-0 border-b transition-all duration-700 ease-out bg-white border-[#1E3754]/8 shadow-[0_4px_30px_rgba(0,0,0,0.01)]',
-          scrolled || mobileOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+          scrolled || mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100 md:-translate-y-full md:opacity-0'
         )}
       />
 
       {/* Header Content Wrapper */}
-      <div className="relative z-10 mx-auto flex max-w-[84rem] items-center justify-between px-6 py-5 sm:px-8 lg:px-12 lg:py-5">
+      <div className="relative z-30 mx-auto flex max-w-[84rem] items-center justify-between px-6 py-5 sm:px-8 lg:px-12 lg:py-5">
         <Link
           to="/"
           aria-label="Singularis Family Office home"
           className={cn(
             'flex flex-col items-start leading-none transition-opacity duration-500 hover:opacity-70',
-            scrolled || mobileOpen ? 'text-[#1E3754]' : 'text-white'
+            scrolled || mobileOpen ? 'text-[#1E3754]' : 'text-[#1E3754] md:text-white'
           )}
         >
           <span className="text-[1.12rem] font-light uppercase tracking-[0.26em] sm:text-[1.24rem]">
@@ -65,10 +123,8 @@ export function AppHeader() {
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((open) => !open)}
           className={cn(
-            'relative flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-500 md:hidden',
-            scrolled || mobileOpen
-              ? 'border-[#1E3754]/12 bg-white/90 text-[#1E3754]'
-              : 'border-white/20 bg-white/10 text-white'
+            'relative z-30 flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-500 md:hidden',
+            'border-[#1E3754]/12 bg-white/90 text-[#1E3754]'
           )}
         >
           <span className="sr-only">{mobileOpen ? 'Close menu' : 'Open menu'}</span>
@@ -110,34 +166,64 @@ export function AppHeader() {
         </nav>
       </div>
 
-      <div
-        className={cn(
-          'fixed inset-0 z-20 md:hidden transition-opacity duration-300',
-          mobileOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
-        )}
-      >
-        <button
-          type="button"
-          aria-label="Close menu overlay"
-          onClick={() => setMobileOpen(false)}
-          className="absolute inset-0 bg-[#1E3754]/18 backdrop-blur-[2px]"
-        />
+      {/* Fullscreen Premium Mobile Menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            variants={menuOverlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="fixed inset-0 z-20 md:hidden h-screen w-screen bg-[#FDFBF7] flex flex-col justify-between px-8 pb-12 pt-[7.5rem]"
+          >
+            <button
+              type="button"
+              aria-label="Close menu overlay"
+              onClick={() => setMobileOpen(false)}
+              className="absolute inset-0 bg-transparent cursor-default"
+            />
 
-        <div className="absolute right-6 top-[5.25rem] w-[min(17rem,calc(100vw-3rem))] rounded-[1.4rem] border border-[#1E3754]/10 bg-white/96 p-3 shadow-[0_22px_60px_rgba(30,55,84,0.16)] backdrop-blur-md">
-          <nav aria-label="Mobile primary" className="flex flex-col">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-[1rem] px-4 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-[#1E3754]/78 transition-colors duration-300 hover:bg-[#1E3754]/[0.05] hover:text-[#1E3754]"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </div>
+            <motion.nav
+              variants={menuListVariants}
+              aria-label="Mobile primary"
+              className="relative z-10 flex flex-col gap-6 text-left mt-6"
+            >
+              {navigationItems.map((item) => (
+                <motion.div key={item.path} variants={menuItemVariants}>
+                  <Link
+                    to={item.path}
+                    onClick={() => setMobileOpen(false)}
+                    className="group flex items-baseline py-2 border-b border-[#1E3754]/5"
+                  >
+                    <span className="text-[1.75rem] font-light uppercase tracking-[0.08em] text-[#1E3754] transition-colors duration-300 group-hover:text-[#1E3754]/60">
+                      {item.label}
+                    </span>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.nav>
+
+            <motion.div
+              variants={menuItemVariants}
+              className="relative z-10 border-t border-[#1E3754]/10 pt-8 space-y-6 text-left"
+            >
+              <div className="flex flex-col gap-1">
+                <span className="text-[0.55rem] uppercase tracking-[0.2em] text-[#1E3754]/34">OFFICE CORRESPONDENCE</span>
+                <a
+                  href="mailto:office@singularisfamilyoffice.com"
+                  className="text-[0.82rem] font-light text-[#1E3754]/72 transition-colors duration-300 hover:text-[#1E3754]"
+                >
+                  office@singularisfamilyoffice.com
+                </a>
+              </div>
+              <div className="flex justify-between items-center text-[0.58rem] uppercase tracking-[0.22em] text-[#1E3754]/34">
+                <span>Stewardship Council</span>
+                <span>Est. 2026</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

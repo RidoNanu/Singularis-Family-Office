@@ -1,8 +1,10 @@
 import { useState, useRef, RefObject } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { HeroSection } from '../../sections/home/HeroSection';
+import { cn } from '../../utils/cn';
 import serviceImage from '../../assets/imagery/service.jpg';
 import continuityImage from '../../assets/imagery/continuity.png';
+import inviteImage from '../../assets/imagery/invite.jpg';
 
 const pageFrame = 'mx-auto max-w-[92rem] px-6 sm:px-8 lg:px-12';
 const sectionSpacing = 'py-20 sm:py-24 lg:py-28';
@@ -66,13 +68,13 @@ const bodyParagraphVariants = {
 
 // Cinematic Image reveal
 const cinematicImageVariants = {
-  hidden: { y: 40, scale: 1.03, opacity: 0 },
+  hidden: { y: 30, scale: 1.02, opacity: 0 },
   visible: {
     y: 0,
     scale: 1,
     opacity: 1,
     transition: {
-      duration: 1.5,
+      duration: 1.0,
       ease: easing
     }
   }
@@ -170,13 +172,13 @@ const contactStatementVariants = {
 };
 
 const presenceImageLeftVariants = {
-  hidden: { x: -60, scale: 1.03, opacity: 0 },
+  hidden: { x: -30, scale: 1.02, opacity: 0 },
   visible: {
     x: 0,
     scale: 1,
     opacity: 1,
     transition: {
-      duration: 1.5,
+      duration: 1.0,
       ease: easing
     }
   }
@@ -297,27 +299,69 @@ const beltCards: BeltCard[] = [
     ],
   },
 ];
-function BeltCardShell({ card }: { card: BeltCard }) {
-  const shellClass = 'group relative h-[23rem] flex-shrink-0 overflow-hidden border-r border-[#1E3754]/10 bg-[#F8F5EF] transition-colors duration-500 hover:bg-[#F3EFE7] sm:h-[16rem]';
+function BeltCardShell({ card, index }: { card: BeltCard; index: number }) {
+  const isDark = index % 2 === 1;
+
+  const shellClass = cn(
+    'group relative h-[23rem] flex-shrink-0 overflow-hidden border-r transition-colors duration-500 sm:h-[16rem]',
+    isDark
+      ? 'border-white/10 bg-[#1E3754] hover:bg-[#182F48]'
+      : 'border-[#1E3754]/10 bg-[#F8F5EF] hover:bg-[#F3EFE7]'
+  );
 
   return (
     <article className={shellClass} style={{ width: card.width }}>
       <div className="flex h-full flex-col justify-between p-6 sm:p-7 lg:p-8">
         <div className="space-y-5">
           <div className="flex items-center gap-4">
-            <span className="text-[0.66rem] uppercase tracking-[0.28em] text-[#1E3754]/40">{card.label}</span>
-            <span className="h-px flex-1 bg-[#1E3754]/8" />
+            <span
+              className={cn(
+                'text-[0.66rem] uppercase tracking-[0.28em]',
+                isDark ? 'text-[#F5F5F2]/40' : 'text-[#1E3754]/40'
+              )}
+            >
+              {card.label}
+            </span>
+            <span className={cn('h-px flex-1', isDark ? 'bg-white/10' : 'bg-[#1E3754]/8')} />
           </div>
           <div className="space-y-3">
-            <p className="text-[1.28rem] font-light leading-[1.25] tracking-[-0.04em] text-[#1E3754] sm:text-[1.42rem]">{card.title}</p>
-            <p className="max-w-[22ch] text-[0.94rem] leading-[1.85] text-[#1E3754]/68">{card.body}</p>
+            <p
+              className={cn(
+                'text-[1.28rem] font-light leading-[1.25] tracking-[-0.04em] sm:text-[1.42rem]',
+                isDark ? 'text-[#F5F5F2]' : 'text-[#1E3754]'
+              )}
+            >
+              {card.title}
+            </p>
+            <p
+              className={cn(
+                'max-w-[22ch] text-[0.94rem] leading-[1.85]',
+                isDark ? 'text-[#F5F5F2]/70' : 'text-[#1E3754]/68'
+              )}
+            >
+              {card.body}
+            </p>
           </div>
         </div>
-        <div className="grid gap-4 border-t border-[#1E3754]/8 pt-4 sm:grid-cols-2">
+        <div className={cn('grid gap-4 border-t pt-4 sm:grid-cols-2', isDark ? 'border-white/10' : 'border-[#1E3754]/8')}>
           {(card.meta || []).map((item) => (
             <div key={item.key} className="flex flex-col gap-1">
-              <span className="text-[0.6rem] uppercase tracking-[0.22em] text-[#1E3754]/36">{item.key}</span>
-              <span className="text-[0.82rem] font-medium text-[#1E3754]/78">{item.val}</span>
+              <span
+                className={cn(
+                  'text-[0.6rem] uppercase tracking-[0.22em]',
+                  isDark ? 'text-[#F5F5F2]/40' : 'text-[#1E3754]/36'
+                )}
+              >
+                {item.key}
+              </span>
+              <span
+                className={cn(
+                  'text-[0.82rem] font-medium',
+                  isDark ? 'text-[#F5F5F2]/80' : 'text-[#1E3754]/78'
+                )}
+              >
+                {item.val}
+              </span>
             </div>
           ))}
         </div>
@@ -387,15 +431,18 @@ export function HomePage() {
         <div className="w-full max-w-[84rem] mx-auto px-6 sm:px-8 lg:px-12 my-auto py-6 sm:py-14 lg:py-20 grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-20 items-center">
           {/* Left Side: Image Column sliding from Left */}
           <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
             variants={presenceImageLeftVariants}
-            className="lg:col-span-5 w-full flex justify-center overflow-hidden rounded-xl"
+            className="lg:col-span-5 w-full flex justify-center order-last lg:order-none"
           >
             <div className="relative w-full aspect-[3/4] sm:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-xl bg-[#1E3754]/5 border border-[#1E3754]/8">
               
               <img
                 src={serviceImage}
                 alt="Institutional Presence"
-                className="h-full w-full object-cover object-center transition-transform duration-[1.2s] ease-out hover:scale-105"
+                className="h-full w-full object-cover object-center transition-transform duration-[1.2s] ease-out hover:scale-105 rounded-xl"
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))]" />
             </div>
@@ -494,8 +541,12 @@ export function HomePage() {
             >
               {[0, 1].map((loopIndex) => (
                 <div key={loopIndex} className="flex items-stretch">
-                  {beltCards.map((card) => (
-                    <BeltCardShell key={`${loopIndex}-${card.id}`} card={card} />
+                  {beltCards.map((card, idx) => (
+                    <BeltCardShell
+                      key={`${loopIndex}-${card.id}`}
+                      card={card}
+                      index={loopIndex * beltCards.length + idx}
+                    />
                   ))}
                 </div>
               ))}
@@ -601,15 +652,18 @@ export function HomePage() {
             </div>
 
             {/* Right Side: Architectural Image Column (5/12 width) */}
-            <div className="order-first mb-6 h-full relative bg-transparent p-0 lg:order-none lg:col-span-5 lg:mb-0 lg:rounded-xl lg:overflow-hidden lg:bg-[#F5F5F2] lg:p-4">
+            <div className="order-first mb-6 h-full relative bg-transparent p-0 lg:order-none lg:col-span-5 lg:mb-0 lg:bg-transparent lg:p-0">
               <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.15 }}
                 variants={cinematicImageVariants}
-                className="relative aspect-[5/4] sm:aspect-[3/4] lg:aspect-auto lg:absolute lg:inset-0 w-full h-full overflow-hidden rounded-[1.25rem] lg:rounded-xl lg:bg-[#ebe8e2]"
+                className="relative aspect-[5/4] sm:aspect-[3/4] lg:aspect-auto lg:absolute lg:inset-0 w-full h-full overflow-hidden rounded-[1.25rem] lg:rounded-xl lg:bg-transparent"
               >
                 <img
                   src={continuityImage}
                   alt="Institutional architectural interior"
-                  className="h-full w-full object-cover object-center grayscale-[20%] contrast-[0.96] saturate-[0.9]"
+                  className="h-full w-full object-cover object-center grayscale-[20%] contrast-[0.96] saturate-[0.9] rounded-[1.25rem] lg:rounded-xl"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_50%,rgba(30,55,84,0.08))]" />
               </motion.div>
@@ -745,54 +799,55 @@ export function HomePage() {
         viewport={{ once: false, amount: 0.2 }}
       >
         <div className={pageFrame}>
-          <div className="mx-auto max-w-[84rem] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          <div className="mx-auto max-w-[84rem] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
             
-            {/* Left Side: Statement (7/12 width) */}
-            <div className="lg:col-span-7 space-y-6">
-              <motion.span variants={headingLineVariants} custom={0} className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-[#1E3754]/52 block">
-                QUIET INVITATION
-              </motion.span>
-              <motion.h2 variants={contactStatementVariants} className="text-[clamp(2.2rem,4.2vw,3.6rem)] font-light leading-[1.1] tracking-[-0.05em] text-[#1E3754] max-w-[16ch]">
-                A discreet conversation, if appropriate.
-              </motion.h2>
-              <motion.p variants={bodyParagraphVariants} className="text-[0.98rem] font-light leading-[1.8] text-[#1E3754]/68 max-w-[28rem]">
-                We welcome formal inquiries from families, trustees, and institutional advisors seeking long-term governance continuity and structured stewardship frameworks.
-              </motion.p>
-            </div>
+            {/* Left Side: Statement & Actions */}
+            <div className="flex flex-col justify-between py-2">
+              <div className="space-y-6">
+                <motion.span variants={headingLineVariants} custom={0} className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-[#1E3754]/52 block">
+                  QUIET INVITATION
+                </motion.span>
+                <motion.h2 variants={contactStatementVariants} className="text-[clamp(2.2rem,4.2vw,3.6rem)] font-light leading-[1.1] tracking-[-0.05em] text-[#1E3754] max-w-[16ch]">
+                  A discreet conversation, if appropriate.
+                </motion.h2>
+                <motion.p variants={bodyParagraphVariants} className="text-[0.98rem] font-light leading-[1.8] text-[#1E3754]/68 max-w-[28rem]">
+                  We welcome formal inquiries from families, trustees, and institutional advisors seeking long-term governance continuity and structured stewardship frameworks.
+                </motion.p>
+                <motion.p variants={bodyParagraphVariants} className="text-[0.92rem] font-light leading-[1.7] text-[#1E3754]/52 max-w-[28rem]">
+                  Request our institutional memorandum, governance overview, or arrange a private introductory conversation.
+                </motion.p>
+              </div>
 
-            {/* Right Side: Inquiry Card (5/12 width) */}
-            <motion.div variants={cardStaggerVariants} custom={1} className="lg:col-span-5 w-full">
-              <div className="flex flex-col justify-between border border-[#1E3754]/8 bg-[#FDFBF7] p-8 sm:p-10 transition-all duration-500 hover:-translate-y-1 hover:border-[#1E3754]/16">
-                <div className="space-y-6">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[0.62rem] uppercase tracking-[0.26em] text-[#1E3754]/36">01 / SECURE INQUIRY</span>
-                    <span className="h-px flex-1 bg-[#1E3754]/8" />
-                  </div>
-                  <p className="text-[0.92rem] font-light leading-[1.7] text-[#1E3754]/62">
-                    Request our institutional memorandum, governance overview, or arrange a private introductory conversation.
-                  </p>
-                  
+              {/* Actions & Metadata */}
+              <div className="space-y-6 mt-8">
+                <motion.div variants={bodyParagraphVariants} className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
                   <a
                     href="mailto:office@singularisfamilyoffice.com"
-                    className="group relative flex items-center justify-between border-b border-[#1E3754]/12 pb-4 text-[0.82rem] font-semibold uppercase tracking-[0.25em] text-[#1E3754] transition-all duration-300 hover:border-[#1E3754]/30 mt-6"
+                    className="inline-flex items-center justify-center rounded-full bg-[#1E3754] px-8 py-3.5 text-[0.76rem] font-semibold uppercase tracking-[0.24em] text-[#F5F5F2] transition-all duration-300 hover:bg-[#182F48] hover:-translate-y-0.5"
                   >
-                    <span>Request contact</span>
-                    <span className="text-[1rem] transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+                    Request contact
                   </a>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 border-t border-[#1E3754]/8 pt-6 mt-8">
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[0.58rem] uppercase tracking-[0.2em] text-[#1E3754]/34">OFFICE EMAIL</span>
-                    <span className="text-[0.82rem] font-medium text-[#1E3754]/72 truncate" title="office@singularisfamilyoffice.com">office@singularisfamilyoffice.com</span>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[0.58rem] uppercase tracking-[0.2em] text-[#1E3754]/34">CHANNEL</span>
-                    <span className="text-[0.82rem] font-medium text-[#1E3754]/72">PGP SECURED</span>
-                  </div>
-                </div>
+                </motion.div>
               </div>
-            </motion.div>
+            </div>
+
+            {/* Right Side: Image Column */}
+            <div className="order-first mb-6 w-full lg:order-none lg:mb-0">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.15 }}
+                variants={cinematicImageVariants}
+                className="relative w-full aspect-[3/2] overflow-hidden rounded-[1.25rem] lg:rounded-xl lg:bg-transparent"
+              >
+                <img
+                  src={inviteImage}
+                  alt="Singularis Office Invitation"
+                  className="h-full w-full object-cover object-center rounded-[1.25rem] lg:rounded-xl"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_50%,rgba(30,55,84,0.04))]" />
+              </motion.div>
+            </div>
 
           </div>
         </div>
