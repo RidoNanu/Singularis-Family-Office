@@ -5,14 +5,15 @@ import { PageShell } from '../PageShell/PageShell';
 
 type MainLayoutProps = {
   children: ReactNode;
+  hideFooter?: boolean;
 };
 
-export function MainLayout({ children }: MainLayoutProps) {
+export function MainLayout({ children, hideFooter = false }: MainLayoutProps) {
   return (
     <PageShell>
       <AppHeader />
       {children}
-      <AppFooter />
+      {!hideFooter && <AppFooter />}
     </PageShell>
   );
 }

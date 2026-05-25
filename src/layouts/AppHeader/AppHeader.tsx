@@ -203,24 +203,6 @@ export function AppHeader() {
               ))}
             </motion.nav>
 
-            <motion.div
-              variants={menuItemVariants}
-              className="relative z-10 border-t border-[#1E3754]/10 pt-8 space-y-6 text-left"
-            >
-              <div className="flex flex-col gap-1">
-                <span className="text-[0.55rem] uppercase tracking-[0.2em] text-[#1E3754]/34">OFFICE CORRESPONDENCE</span>
-                <a
-                  href="mailto:office@singularisfamilyoffice.com"
-                  className="text-[0.82rem] font-light text-[#1E3754]/72 transition-colors duration-300 hover:text-[#1E3754]"
-                >
-                  office@singularisfamilyoffice.com
-                </a>
-              </div>
-              <div className="flex justify-between items-center text-[0.58rem] uppercase tracking-[0.22em] text-[#1E3754]/34">
-                <span>Stewardship Council</span>
-                <span>Est. 2026</span>
-              </div>
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

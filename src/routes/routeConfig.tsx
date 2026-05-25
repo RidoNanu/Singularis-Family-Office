@@ -13,7 +13,7 @@ export type RouteConfigItem = {
 
 export const routeConfig: RouteConfigItem[] = [
   { path: routePaths.home, element: <MainLayout><HomePage /></MainLayout> },
-  { path: routePaths.about, element: <MainLayout><AboutUsPage /></MainLayout> },
+  { path: routePaths.about, element: <MainLayout hideFooter><AboutUsPage /></MainLayout> },
   { path: routePaths.services, element: <MainLayout><ServicesPage /></MainLayout> },
   { path: '*', element: <MainLayout><NotFoundPage /></MainLayout> },
 ];

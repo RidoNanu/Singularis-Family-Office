@@ -36,8 +36,10 @@ export function HeroSection() {
   const rawRevealY = useTransform(scrollYProgress, [0, 0.25, 0.90, 1], [30, 30, 0, 0]);
   const revealY = useSpring(rawRevealY, { stiffness: 95, damping: 26 });
 
-  // Mobile image translation (slides smoothly matching finger scroll exactly)
-  const mobileImageX = useTransform(scrollYProgress, [0, 0.20, 0.95, 1], ['0%', '0%', '110%', '110%']);
+  // Mobile image translation: slides out horizontally with spring smoothing
+  const rawMobileImageX = useTransform(scrollYProgress, [0, 0.20, 0.95, 1], [0, 0, 110, 110]);
+  const smoothMobileImageX = useSpring(rawMobileImageX, { stiffness: 95, damping: 26 });
+  const mobileImageX = useTransform(smoothMobileImageX, (v) => `${v}%`);
 
   // Mobile reveal layer animation values
   const rawMobileRevealOpacity = useTransform(scrollYProgress, [0, 0.25, 0.90, 1], [0, 0, 1, 1]);
