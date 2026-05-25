@@ -115,13 +115,13 @@ export function AppHeader() {
           to="/"
           onClick={() => handleLinkClick('/')}
           aria-label="Singularis Family Office home"
-          className="transition-opacity duration-500 hover:opacity-70 flex items-center h-10 w-36 relative overflow-visible"
+          className="transition-opacity duration-500 hover:opacity-70 flex items-center"
         >
           <img
             src={logoImage}
             alt="Singularis Family Office Logo"
             className={cn(
-              "absolute left-[-28px] sm:left-[-36px] top-1/2 -translate-y-1/2 h-44 sm:h-52 w-auto max-w-none object-contain transition-all duration-500",
+              "h-9 sm:h-10 w-auto object-contain transition-all duration-500",
               scrolled || mobileOpen ? "" : "md:brightness-0 md:invert"
             )}
           />
