@@ -68,18 +68,6 @@ const lineRevealVariants = {
   },
 };
 
-const nodeVariants = {
-  hidden: { opacity: 0, scale: 0.9, y: 8 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      duration: 0.55,
-      ease: easing,
-    },
-  },
-};
 
 const timelineItems = [
   {
@@ -255,16 +243,6 @@ export function ServicesPage() {
                     viewport={{ once: true, amount: 0.25 }}
                     className="relative flex flex-row items-center justify-between w-full"
                   >
-                    {/* Central connection point (node on the vertical line) */}
-                    <motion.div
-                      variants={nodeVariants}
-                      transition={{ delay: 0.05, duration: 0.55, ease: easing }}
-                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center"
-                    >
-                      <div className="h-4 w-4 rounded-full border border-[#1E3754]/30 bg-[#FAF9F6] flex items-center justify-center shadow-[0_2px_6px_rgba(30,55,84,0.05)]">
-                        <div className="h-1.5 w-1.5 rounded-full bg-[#1E3754]" />
-                      </div>
-                    </motion.div>
 
                     {/* Left dashed line (for left card) */}
                     {isLeft && (
