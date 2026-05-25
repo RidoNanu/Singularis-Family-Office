@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
-import heroImage from '../../assets/imagery/i3.jpg';
+import heroImage from '../../assets/imagery/i3.png';
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
@@ -109,7 +109,7 @@ export function HeroSection() {
             whileInView="visible"
             viewport={{ once: false }}
             style={reduceMotion ? { opacity: 1, y: 0 } : { opacity: mobileRevealOpacity, y: mobileRevealY }}
-            className="absolute inset-0 z-10 flex flex-col justify-between bg-white px-6 py-28 text-center text-[#1E3754]"
+            className="absolute top-[17.5vh] bottom-[17.5vh] left-0 right-0 z-10 flex flex-col justify-between bg-white px-6 py-10 text-center text-[#1E3754]"
           >
             <motion.div
               variants={lineVariants}
@@ -158,14 +158,13 @@ export function HeroSection() {
 
           <motion.div
             style={{ x: mobileImageX }}
-            className="absolute inset-0 z-20 overflow-hidden bg-white"
+            className="absolute top-[17.5vh] bottom-[17.5vh] left-0 right-0 z-20 overflow-hidden bg-white"
           >
             <img
               src={heroImage}
               alt="Interior study"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0))' }} />
           </motion.div>
         </div>
       </div>
@@ -248,7 +247,6 @@ export function HeroSection() {
               alt="Interior study"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0))' }} />
           </motion.div>
 
         </div>

@@ -9,6 +9,8 @@ export function AppHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
+  const isServicesPage = location.pathname.endsWith('/services');
+
   const handleLinkClick = (path: string) => {
     setMobileOpen(false);
     if (location.pathname === path) {
@@ -115,7 +117,7 @@ export function AppHeader() {
           aria-label="Singularis Family Office home"
           className={cn(
             'flex flex-col items-start leading-none transition-opacity duration-500 hover:opacity-70',
-            scrolled || mobileOpen ? 'text-[#1E3754]' : 'text-[#1E3754] md:text-white'
+            scrolled || mobileOpen || isServicesPage ? 'text-[#1E3754]' : 'text-[#1E3754] md:text-white'
           )}
         >
           <span className="text-[1.12rem] font-light uppercase tracking-[0.26em] sm:text-[1.24rem]">
@@ -165,7 +167,7 @@ export function AppHeader() {
               onClick={() => handleLinkClick(item.path)}
               className={cn(
                 'text-[0.72rem] font-semibold uppercase tracking-[0.28em] transition-colors duration-500',
-                scrolled
+                scrolled || isServicesPage
                   ? 'text-[#1E3754]/70 hover:text-[#1E3754]'
                   : 'text-white/70 hover:text-white'
               )}
