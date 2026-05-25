@@ -109,7 +109,7 @@ export function HeroSection() {
             whileInView="visible"
             viewport={{ once: false }}
             style={reduceMotion ? { opacity: 1, y: 0 } : { opacity: mobileRevealOpacity, y: mobileRevealY }}
-            className="absolute top-[17.5vh] bottom-[17.5vh] left-0 right-0 z-10 flex flex-col justify-between bg-white px-6 py-10 text-center text-[#1E3754]"
+            className="absolute inset-0 z-10 flex flex-col justify-between bg-white px-6 py-28 text-center text-[#1E3754]"
           >
             <motion.div
               variants={lineVariants}
@@ -158,7 +158,7 @@ export function HeroSection() {
 
           <motion.div
             style={{ x: mobileImageX }}
-            className="absolute top-[17.5vh] bottom-[17.5vh] left-0 right-0 z-20 overflow-hidden bg-white"
+            className="absolute inset-0 z-20 overflow-hidden bg-white"
           >
             <img
               src={heroImage}

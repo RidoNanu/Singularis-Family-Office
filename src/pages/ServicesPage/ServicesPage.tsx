@@ -1,20 +1,20 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import heroService from '../../assets/imagery/hero_service.jpg';
+import strucImage from '../../assets/imagery/struc.jpg';
 
 const easing = [0.22, 1, 0.36, 1] as const;
 
 const headingVariants = {
-  hidden: { y: 24, opacity: 0 },
-  visible: (i: number = 0) => ({
+  hidden: { y: 20, opacity: 0 },
+  visible: {
     y: 0,
     opacity: 1,
     transition: {
       duration: 1.2,
       ease: easing,
-      delay: i * 0.1,
     },
-  }),
+  },
 };
 
 const bodyParagraphVariants = {
@@ -64,69 +64,6 @@ const lineRevealVariants = {
       duration: 0.8,
       ease: easing,
       delay: 0.2,
-    },
-  },
-};
-
-const mobileLineRevealVariants = {
-  hidden: { scaleX: 0, opacity: 0 },
-  visible: {
-    scaleX: 1,
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-      ease: easing,
-      delay: 0.2,
-    },
-  },
-};
-
-const timelineLeftVariants = {
-  hidden: { x: -40, y: 30, opacity: 0 },
-  visible: {
-    x: 0,
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 1.2,
-      ease: easing,
-    },
-  },
-};
-
-const timelineRightVariants = {
-  hidden: { x: 40, y: 30, opacity: 0 },
-  visible: {
-    x: 0,
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 1.2,
-      ease: easing,
-    },
-  },
-};
-
-const spineVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 2.0,
-      ease: 'linear' as const,
-    },
-  },
-};
-
-const connectorVariants = {
-  hidden: { opacity: 0, scaleX: 0 },
-  visible: {
-    opacity: 1,
-    scaleX: 1,
-    transition: {
-      duration: 0.6,
-      ease: easing,
-      delay: 0.1,
     },
   },
 };
@@ -202,10 +139,10 @@ export function ServicesPage() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <main className="bg-white overflow-hidden pt-[7.5rem]">
+    <main className="bg-white overflow-hidden pt-0">
       {/* ── SECTION 01 — HERO ── */}
       <motion.section
-        className="relative bg-neutral-900 py-24 sm:py-32 lg:py-40 text-center px-6 overflow-hidden"
+        className="relative bg-neutral-900 pt-32 pb-24 sm:pt-40 sm:pb-32 lg:pt-48 lg:pb-40 text-center px-6 overflow-hidden"
         initial={reduceMotion ? false : 'hidden'}
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -222,14 +159,13 @@ export function ServicesPage() {
         <div className="mx-auto max-w-[84rem] relative z-20 flex flex-col items-center">
           <motion.span
             variants={headingVariants}
-            custom={0}
             className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-white/50"
           >
             INSTITUTIONAL SERVICES
           </motion.span>
           <motion.h1
             variants={headingVariants}
-            custom={1}
+            transition={{ delay: 0.15 }}
             className="mt-6 text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-none tracking-[-0.03em] text-white font-serif-elegant select-none max-w-[48rem]"
           >
             Structures designed for continuity.
@@ -240,7 +176,7 @@ export function ServicesPage() {
           >
             Singularis Family Office approaches stewardship through governance clarity, operational coordination, and long-term institutional preservation.
           </motion.p>
-          
+
           <motion.div
             variants={fadeUpVariants}
             className="flex flex-wrap justify-center gap-x-12 gap-y-4 mt-20 border-t border-white/15 pt-6 w-full max-w-[40rem]"
@@ -266,14 +202,13 @@ export function ServicesPage() {
           <div className="flex flex-col items-center text-center mb-20 sm:mb-28">
             <motion.span
               variants={headingVariants}
-              custom={0}
               className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40"
             >
               STRUCTURED CONTINUITY
             </motion.span>
             <motion.h2
               variants={headingVariants}
-              custom={1}
+              transition={{ delay: 0.15 }}
               className="mt-6 text-[#1E3754] text-[clamp(2rem,4.5vw,3.6rem)] font-light leading-[1.1] tracking-[-0.02em] font-serif-elegant max-w-[40rem]"
             >
               Institutional Coordination Across Generations
@@ -281,11 +216,11 @@ export function ServicesPage() {
           </div>
 
           {/* Connected floating cards layout */}
-          <div className="relative mx-auto max-w-[64rem] mt-16 md:mt-24 px-2 md:px-0">
+          <div className="relative mx-auto max-w-[64rem] mt-16 md:mt-24 px-0">
             {/* Center vertical line */}
-            <div className="absolute left-[18px] md:left-1/2 top-0 bottom-0 -translate-x-1/2 w-[1px] bg-[#1E3754]/15" />
+            <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-[1px] bg-[#1E3754]/15" />
 
-            <div className="space-y-16 md:space-y-28 relative">
+            <div className="space-y-12 md:space-y-28 relative">
               {generationalSteps.map((step, idx) => {
                 const isLeft = idx % 2 === 0;
                 return (
@@ -294,12 +229,12 @@ export function ServicesPage() {
                     initial={reduceMotion ? false : 'hidden'}
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.25 }}
-                    className="relative flex flex-col md:flex-row items-start md:items-center justify-between w-full pl-10 md:pl-0"
+                    className="relative flex flex-row items-center justify-between w-full"
                   >
                     {/* Central connection point (node on the vertical line) */}
                     <motion.div
                       variants={nodeVariants}
-                      className="absolute left-[18px] md:left-1/2 top-[50px] md:top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center"
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center"
                     >
                       <div className="h-4 w-4 rounded-full border border-[#1E3754]/30 bg-[#FAF9F6] flex items-center justify-center shadow-[0_2px_6px_rgba(30,55,84,0.05)]">
                         <div className="h-1.5 w-1.5 rounded-full bg-[#1E3754]" />
@@ -310,7 +245,7 @@ export function ServicesPage() {
                     {isLeft && (
                       <motion.div
                         variants={lineRevealVariants}
-                        className="absolute right-[50%] w-[3rem] h-px border-t border-dashed border-[#1E3754]/30 top-1/2 -translate-y-1/2 hidden md:block origin-right"
+                        className="absolute right-1/2 w-3 md:w-[3rem] h-px border-t border-dashed border-[#1E3754]/30 top-1/2 -translate-y-1/2 origin-right"
                       />
                     )}
 
@@ -318,58 +253,93 @@ export function ServicesPage() {
                     {!isLeft && (
                       <motion.div
                         variants={lineRevealVariants}
-                        className="absolute left-[50%] w-[3rem] h-px border-t border-dashed border-[#1E3754]/30 top-1/2 -translate-y-1/2 hidden md:block origin-left"
+                        className="absolute left-1/2 w-3 md:w-[3rem] h-px border-t border-dashed border-[#1E3754]/30 top-1/2 -translate-y-1/2 origin-left"
                       />
                     )}
 
-                    {/* Mobile dashed line (always left) */}
-                    <motion.div
-                      variants={mobileLineRevealVariants}
-                      className="absolute left-[18px] w-[22px] h-px border-t border-dashed border-[#1E3754]/30 top-[50px] -translate-y-1/2 md:hidden origin-left"
-                    />
+                    {/* Left Column (contains card if isLeft is true) */}
+                    <div className="w-[calc(50%-12px)] md:w-[calc(50%-3rem)] flex justify-end">
+                      {isLeft && (
+                        <motion.div
+                          variants={cardVariants}
+                          className="relative bg-white border border-[#1E3754]/8 rounded-[12px] md:rounded-[24px] p-3 md:p-10 shadow-[0_8px_30px_rgba(30,55,84,0.02)] hover:shadow-[0_12px_40px_rgba(30,55,84,0.05)] w-full max-w-[390px] text-left transition-all duration-700 ease-out group"
+                          style={{ rotate: reduceMotion ? 0 : step.rotation }}
+                        >
+                          {/* Anchor Node on the card's right edge */}
+                          <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 h-2.5 w-2.5 md:h-3 md:w-3 rounded-full border border-[#1E3754]/30 bg-[#FAF9F6] flex items-center justify-center z-30 group-hover:scale-110 transition-transform duration-300">
+                            <div className="h-1 w-1 rounded-full bg-[#1E3754]/60" />
+                          </div>
 
-                    {/* Card container */}
-                    <div className={`w-full md:w-[calc(50%-3rem)] flex ${isLeft ? 'justify-start md:justify-end' : 'justify-start md:order-last'}`}>
-                      <motion.div
-                        variants={cardVariants}
-                        className="relative bg-white border border-[#1E3754]/8 rounded-[24px] p-8 md:p-10 shadow-[0_8px_30px_rgba(30,55,84,0.02)] hover:shadow-[0_12px_40px_rgba(30,55,84,0.05)] w-full max-w-[390px] text-left transition-all duration-700 ease-out group"
-                        style={{ rotate: reduceMotion ? 0 : step.rotation }}
-                      >
-                        {/* Anchor Node on the card */}
-                        <div className="absolute left-0 md:left-auto right-auto md:right-0 top-[50px] md:top-1/2 -translate-x-1/2 md:translate-x-1/2 -translate-y-1/2 h-3 w-3 rounded-full border border-[#1E3754]/30 bg-[#FAF9F6] flex items-center justify-center z-30 group-hover:scale-110 transition-transform duration-300">
-                          <div className="h-1 w-1 rounded-full bg-[#1E3754]/60" />
-                        </div>
+                          {/* Card Content */}
+                          <div className="flex justify-between items-start mb-2 md:mb-6">
+                            <span className="text-[8px] md:text-[0.66rem] font-mono tracking-[0.2em] text-[#1E3754]/40 uppercase">
+                              PHASE {step.number}
+                            </span>
+                            <span className="text-[7px] md:text-[0.62rem] font-semibold uppercase tracking-[0.25em] text-[#1E3754]/20 font-mono">
+                              COORD
+                            </span>
+                          </div>
 
-                        {/* Card Content */}
-                        <div className="flex justify-between items-start mb-6">
-                          <span className="text-[0.66rem] font-mono tracking-[0.2em] text-[#1E3754]/40 uppercase">
-                            PHASE {step.number}
-                          </span>
-                          <span className="text-[0.62rem] font-semibold uppercase tracking-[0.25em] text-[#1E3754]/20 font-mono">
-                            COORD
-                          </span>
-                        </div>
+                          <h3 className="text-[#1E3754] text-xs sm:text-sm md:text-[1.4rem] font-light leading-tight font-serif-elegant mb-1.5 md:mb-4">
+                            {step.heading}
+                          </h3>
+                          <p className="text-[9px] sm:text-[10px] md:text-[0.94rem] leading-[1.5] md:leading-[1.65] font-light text-[#1E3754]/68 mb-3 md:mb-6">
+                            {step.body}
+                          </p>
 
-                        <h3 className="text-[#1E3754] text-[1.4rem] font-light leading-tight font-serif-elegant mb-4">
-                          {step.heading}
-                        </h3>
-                        <p className="text-[0.94rem] leading-[1.65] font-light text-[#1E3754]/68 mb-6">
-                          {step.body}
-                        </p>
-
-                        <div className="border-t border-[#1E3754]/6 pt-4 flex justify-between items-center">
-                          <span className="text-[0.6rem] font-mono uppercase tracking-[0.3em] text-[#1E3754]/40">
-                            KEYWORD
-                          </span>
-                          <span className="text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-[#1E3754] font-mono">
-                            {step.keyword}
-                          </span>
-                        </div>
-                      </motion.div>
+                          <div className="border-t border-[#1E3754]/6 pt-1.5 md:pt-4 flex justify-between items-center">
+                            <span className="text-[7px] md:text-[0.6rem] font-mono uppercase tracking-[0.3em] text-[#1E3754]/40">
+                              KEYWORD
+                            </span>
+                            <span className="text-[8px] md:text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-[#1E3754] font-mono">
+                              {step.keyword}
+                            </span>
+                          </div>
+                        </motion.div>
+                      )}
                     </div>
 
-                    {/* Spacer for non-card side */}
-                    <div className="w-full md:w-[calc(50%-3rem)] hidden md:block" />
+                    {/* Right Column (contains card if isLeft is false) */}
+                    <div className="w-[calc(50%-12px)] md:w-[calc(50%-3rem)] flex justify-start">
+                      {!isLeft && (
+                        <motion.div
+                          variants={cardVariants}
+                          className="relative bg-white border border-[#1E3754]/8 rounded-[12px] md:rounded-[24px] p-3 md:p-10 shadow-[0_8px_30px_rgba(30,55,84,0.02)] hover:shadow-[0_12px_40px_rgba(30,55,84,0.05)] w-full max-w-[390px] text-left transition-all duration-700 ease-out group"
+                          style={{ rotate: reduceMotion ? 0 : step.rotation }}
+                        >
+                          {/* Anchor Node on the card's left edge */}
+                          <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 h-2.5 w-2.5 md:h-3 md:w-3 rounded-full border border-[#1E3754]/30 bg-[#FAF9F6] flex items-center justify-center z-30 group-hover:scale-110 transition-transform duration-300">
+                            <div className="h-1 w-1 rounded-full bg-[#1E3754]/60" />
+                          </div>
+
+                          {/* Card Content */}
+                          <div className="flex justify-between items-start mb-2 md:mb-6">
+                            <span className="text-[8px] md:text-[0.66rem] font-mono tracking-[0.2em] text-[#1E3754]/40 uppercase">
+                              PHASE {step.number}
+                            </span>
+                            <span className="text-[7px] md:text-[0.62rem] font-semibold uppercase tracking-[0.25em] text-[#1E3754]/20 font-mono">
+                              COORD
+                            </span>
+                          </div>
+
+                          <h3 className="text-[#1E3754] text-xs sm:text-sm md:text-[1.4rem] font-light leading-tight font-serif-elegant mb-1.5 md:mb-4">
+                            {step.heading}
+                          </h3>
+                          <p className="text-[9px] sm:text-[10px] md:text-[0.94rem] leading-[1.5] md:leading-[1.65] font-light text-[#1E3754]/68 mb-3 md:mb-6">
+                            {step.body}
+                          </p>
+
+                          <div className="border-t border-[#1E3754]/6 pt-1.5 md:pt-4 flex justify-between items-center">
+                            <span className="text-[7px] md:text-[0.6rem] font-mono uppercase tracking-[0.3em] text-[#1E3754]/40">
+                              KEYWORD
+                            </span>
+                            <span className="text-[8px] md:text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-[#1E3754] font-mono">
+                              {step.keyword}
+                            </span>
+                          </div>
+                        </motion.div>
+                      )}
+                    </div>
                   </motion.div>
                 );
               })}
@@ -386,98 +356,68 @@ export function ServicesPage() {
         viewport={{ once: true, amount: 0.15 }}
       >
         <div className="mx-auto max-w-[84rem]">
-          <div className="flex flex-col items-center text-center">
-            <motion.span
-              variants={headingVariants}
-              custom={0}
-              className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40"
-            >
-              STRUCTURED OVERSIGHT
-            </motion.span>
-            <motion.h2
-              className="mt-6 text-[#1E3754] text-center font-light tracking-[-0.03em] text-[clamp(2rem,4.5vw,3.6rem)] leading-[1.1] select-none font-serif-elegant"
-            >
-              A disciplined operational rhythm.
-            </motion.h2>
-            <motion.p
-              variants={bodyParagraphVariants}
-              className="mt-6 mx-auto max-w-[60ch] text-[0.98rem] sm:text-[1.04rem] font-light leading-[1.75] text-[#1E3754]/72"
-            >
-              Institutional continuity depends on measured pacing, governance cadence, and operational clarity.
-            </motion.p>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 lg:gap-x-20 items-start">
+            {/* Left side: Image */}
+            <div className="col-span-12 md:col-span-5 lg:col-span-6">
+              <motion.div
+                variants={cardVariants}
+                className="relative overflow-hidden rounded-[24px] border border-[#1E3754]/10 shadow-[0_12px_40px_rgba(30,55,84,0.03)] aspect-[4/5] md:h-[620px] w-full"
+              >
+                <img
+                  src={strucImage}
+                  alt="Disciplined Operational Rhythm"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            </div>
 
-          {/* Sequence area with center spine */}
-          <div className="relative mt-16 lg:mt-24">
-            {/* Center spine */}
-            <motion.div
-              variants={spineVariants}
-              className="absolute left-1/2 top-0 bottom-0 transform -translate-x-1/2 w-[1px] sm:w-[3px] bg-[#1E3754]/[0.14] sm:bg-[#1E3754]/[0.30]"
-            />
+            {/* Right side: Content */}
+            <div className="col-span-12 md:col-span-7 lg:col-span-6 md:pl-6">
+              <div className="flex flex-col items-start mt-0 pt-0">
+                <motion.h2
+                  variants={headingVariants}
+                  className="text-[#1E3754] font-light tracking-[-0.03em] text-[clamp(2rem,4.5vw,3.6rem)] leading-[1.1] font-serif-elegant select-none mt-0 pt-0"
+                >
+                  A disciplined operational rhythm.
+                </motion.h2>
+              </div>
 
-            <div className="relative">
-              <div className="space-y-12 sm:space-y-20 lg:space-y-24">
-                {timelineItems.map((phase, i) => {
-                  const isLeft = i % 2 === 0;
-                  return (
-                    <motion.div
-                      key={phase.mark}
-                      initial={reduceMotion ? false : 'hidden'}
-                      whileInView="visible"
-                      variants={isLeft ? timelineLeftVariants : timelineRightVariants}
-                      viewport={{ once: false, amount: 0.35 }}
-                      className="grid grid-cols-12 items-start gap-1 sm:gap-4"
-                    >
-                      {/* Left column (content for left items) */}
-                      <div className={`col-span-5 ${isLeft ? 'text-right pr-1 sm:pr-8' : 'col-start-1 invisible'}`}>
-                        {isLeft ? (
-                          <div className="max-w-full sm:max-w-[44ch] lg:ml-auto">
-                            <div className="text-[0.58rem] sm:text-[0.92rem] font-mono text-[#1E3754]/30">{phase.mark}</div>
-                            <h3 className="mt-1 sm:mt-2 text-[11px] sm:text-[clamp(22px,2.8vw,30px)] font-medium text-[#1E3754] leading-[1.1]">{phase.heading}</h3>
-                            <p className="mt-1.5 sm:mt-3 text-[9px] sm:text-[clamp(15px,1vw,17px)] leading-[1.35] sm:leading-[1.6] text-[#1E3754]/75 whitespace-pre-line break-words">{phase.body}</p>
-                            <div className="mt-1.5 sm:mt-3 text-[0.52rem] sm:text-[0.72rem] uppercase tracking-[0.15em] sm:tracking-[0.28em] text-[#1E3754]/40">{phase.rightMeta}</div>
-                          </div>
-                        ) : null}
-                      </div>
+              {/* Vertical timeline list */}
+              <div className="relative pl-8 mt-6 space-y-12">
+                {/* Vertical line running down the list */}
+                <div className="absolute left-[9px] top-2 bottom-2 w-[1px] bg-[#1E3754]/15" />
 
-                      {/* Center connector column */}
-                      <div className="col-span-2 flex justify-center">
-                        <div className="relative w-full flex justify-center items-start">
-                          {/* horizontal connector from spine to node */}
-                          <motion.div
-                            variants={connectorVariants}
-                            className="absolute h-[1.5px] sm:h-[3px] bg-[#1E3754]/[0.12] sm:bg-[#1E3754]/[0.22] w-[24px] sm:w-[140px] top-[14px] sm:top-[32px]"
-                            style={{
-                              ...(isLeft ? { right: '50%' } : { left: '50%' }),
-                              transformOrigin: isLeft ? 'right center' : 'left center',
-                            }}
-                          />
+                {timelineItems.map((phase) => (
+                  <motion.div
+                    key={phase.mark}
+                    variants={cardVariants}
+                    className="relative flex flex-col items-start"
+                  >
+                    {/* Circular node anchor */}
+                    <div className="absolute left-[-28px] top-[6px] h-4.5 w-4.5 rounded-full border-2 border-[#1E3754]/20 bg-white flex items-center justify-center shadow-[0_2px_6px_rgba(30,55,84,0.04)]">
+                      <div className="h-1.5 w-1.5 rounded-full bg-[#1E3754]" />
+                    </div>
 
-                          {/* circular node anchored exactly where the connector meets the spine */}
-                          <div className="absolute left-1/2 z-10 -translate-x-1/2 top-[9px] sm:top-[24px]">
-                            <motion.div variants={nodeVariants} className="flex items-center justify-center">
-                              <div className="flex h-2.5 w-2.5 sm:h-5 sm:w-5 items-center justify-center rounded-full border border-[#1E3754]/24 bg-white shadow-[0_4px_12px_rgba(30,55,84,0.06)]">
-                                <div className="h-0.5 w-0.5 sm:h-1.5 sm:w-1.5 rounded-full bg-[#1E3754]/36" />
-                              </div>
-                            </motion.div>
-                          </div>
-                        </div>
-                      </div>
+                    {/* Content block */}
+                    <div className="flex items-center gap-3">
+                      <span className="text-[0.68rem] font-mono tracking-[0.2em] text-[#1E3754]/30">
+                        {phase.mark}
+                      </span>
+                      <div className="w-1 h-1 rounded-full bg-[#1E3754]/20" />
+                      <span className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#1E3754]/40 font-mono">
+                        {phase.rightMeta}
+                      </span>
+                    </div>
 
-                      {/* Right column (content for right items) */}
-                      <div className={`col-span-5 ${!isLeft ? 'text-left pl-1 sm:pl-8' : 'col-start-8 invisible'}`}>
-                        {!isLeft ? (
-                          <div className="max-w-full sm:max-w-[44ch]">
-                            <div className="text-[0.58rem] sm:text-[0.92rem] font-mono text-[#1E3754]/30">{phase.mark}</div>
-                            <h3 className="mt-1 sm:mt-2 text-[11px] sm:text-[clamp(22px,2.8vw,30px)] font-medium text-[#1E3754] leading-[1.1]">{phase.heading}</h3>
-                            <p className="mt-1.5 sm:mt-3 text-[9px] sm:text-[clamp(15px,1vw,17px)] leading-[1.35] sm:leading-[1.6] text-[#1E3754]/75 whitespace-pre-line break-words">{phase.body}</p>
-                            <div className="mt-1.5 sm:mt-3 text-[0.52rem] sm:text-[0.72rem] uppercase tracking-[0.15em] sm:tracking-[0.28em] text-[#1E3754]/40">{phase.rightMeta}</div>
-                          </div>
-                        ) : null}
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                    <h3 className="mt-2 text-[#1E3754] text-[1.28rem] font-light font-serif-elegant leading-tight">
+                      {phase.heading}
+                    </h3>
+
+                    <p className="mt-2.5 text-[0.92rem] leading-[1.65] font-light text-[#1E3754]/68 max-w-[28rem]">
+                      {phase.body}
+                    </p>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
@@ -494,21 +434,20 @@ export function ServicesPage() {
         <div className="mx-auto max-w-[84rem] flex flex-col items-center">
           <motion.span
             variants={headingVariants}
-            custom={0}
             className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40"
           >
             INSTITUTIONAL PRESENCE
           </motion.span>
           <motion.h2
             variants={headingVariants}
-            custom={1}
+            transition={{ delay: 0.15 }}
             className="mt-6 text-[#1E3754] text-[clamp(2rem,5.5vw,4.5rem)] font-light leading-none tracking-[-0.03em] font-serif-elegant select-none"
           >
             Quiet systems. Visible structure.
           </motion.h2>
           <motion.p
             variants={headingVariants}
-            custom={2}
+            transition={{ delay: 0.3 }}
             className="mt-8 max-w-[28rem] text-[0.98rem] sm:text-[1.04rem] font-light leading-[1.75] text-[#1E3754]/75"
           >
             Clarity, continuity, and governance alignment remain central to every layer of coordination.
