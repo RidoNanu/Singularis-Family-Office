@@ -121,7 +121,7 @@ export function AppHeader() {
             src={logoImage}
             alt="Singularis Family Office Logo"
             className={cn(
-              "h-9 sm:h-10 w-auto object-contain transition-all duration-500",
+              "h-9 sm:h-10 w-auto object-contain transition-all duration-500 scale-[3.5] sm:scale-[4.0] origin-left",
               scrolled || mobileOpen ? "" : "md:brightness-0 md:invert"
             )}
           />
