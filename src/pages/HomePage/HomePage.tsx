@@ -2,9 +2,9 @@ import { useState, useRef, RefObject } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { HeroSection } from '../../sections/home/HeroSection';
 import { cn } from '../../utils/cn';
-import serviceImage from '../../assets/imagery/service.jpg';
-import continuityImage from '../../assets/imagery/continuity.png';
-import inviteImage from '../../assets/imagery/invite.jpg';
+import serviceImage from '../../assets/imagery/service.webp';
+import continuityImage from '../../assets/imagery/continuity.webp';
+import inviteImage from '../../assets/imagery/invite.webp';
 
 const pageFrame = 'mx-auto max-w-[92rem] px-6 sm:px-8 lg:px-12';
 const sectionSpacing = 'py-20 sm:py-24 lg:py-28';

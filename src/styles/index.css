@@ -1,0 +1,45 @@
+/* ─── Tailwind ─────────────────────────────────────────────── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─────────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: auto !important;
+}
+
+html.lenis,
+html.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+body {
+  margin: 0;
+  text-rendering: optimizeLegibility;
+  font-family: Inter, system-ui, sans-serif;
+  background: #ffffff;
+  color: #1e3754;
+}
+
+/* ─── Typography ───────────────────────────────────────────── */
+.font-serif-elegant {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+/* ─── Utilities ────────────────────────────────────────────── */
+.sfo-container {
+  width: min(100% - 2rem, 72rem);
+  margin-inline: auto;
+}

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
-import heroImage from '../../assets/imagery/i3.png';
-import heroImageMobile from '../../assets/imagery/i33.png';
+import heroImage from '../../assets/imagery/i3.webp';
+import heroImageMobile from '../../assets/imagery/i33.webp';
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
@@ -85,16 +85,16 @@ export function HeroSection() {
             whileInView="visible"
             viewport={{ once: false }}
             style={reduceMotion ? { opacity: 1, y: 0 } : { opacity: mobileRevealOpacity, y: mobileRevealY }}
-            className="absolute top-[17.5vh] bottom-[17.5vh] left-0 right-0 z-10 flex flex-col justify-between bg-white px-6 py-10 text-center text-[#1E3754]"
+            className="absolute inset-0 z-10 flex flex-col justify-center items-center bg-white px-6 pb-10 pt-24 text-center text-[#1E3754] gap-0"
           >
             <motion.div
               variants={lineVariants}
-              className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40 mx-auto"
+              className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40 mb-8"
             >
               Institutional Presence
             </motion.div>
 
-            <div className="my-auto py-10 flex flex-col items-center">
+            <div className="flex flex-col items-center">
               <h1 className="text-[#1E3754] text-center font-light tracking-[-0.05em] text-[clamp(3.2rem,13vw,5.5rem)] leading-[0.9] select-none flex flex-col items-center">
                 <span className="overflow-hidden inline-block py-2">
                   <motion.span variants={lineVariants} transition={{ delay: 0.08 }} className="inline-block">
@@ -111,7 +111,7 @@ export function HeroSection() {
               <motion.div
                 variants={lineVariants}
                 transition={{ delay: 0.24 }}
-                className="my-9 h-px w-24 bg-[#1E3754]/14"
+                className="my-7 h-px w-24 bg-[#1E3754]/14"
               />
 
               <motion.p
@@ -121,26 +121,26 @@ export function HeroSection() {
               >
                 A discreet institutional office structured for continuity, governance clarity, and long-horizon stewardship across generations.
               </motion.p>
-            </div>
 
-            <motion.div
-              variants={lineVariants}
-              transition={{ delay: 0.40 }}
-              className="flex justify-between items-center w-full max-w-[24rem] mx-auto text-[0.62rem] uppercase tracking-[0.25em] text-[#1E3754]/38 border-t border-[#1E3754]/8 pt-5"
-            >
-              <span>Stewardship Council</span>
-              <span>Est. 2026</span>
-            </motion.div>
+              <motion.div
+                variants={lineVariants}
+                transition={{ delay: 0.40 }}
+                className="flex justify-between items-center w-full max-w-[24rem] mt-8 text-[0.62rem] uppercase tracking-[0.25em] text-[#1E3754]/38 border-t border-[#1E3754]/8 pt-5"
+              >
+                <span>Stewardship Council</span>
+                <span>Est. 2026</span>
+              </motion.div>
+            </div>
           </motion.div>
 
           <motion.div
             style={{ x: mobileImageX }}
-            className="absolute top-[17.5vh] bottom-[17.5vh] left-0 right-0 z-20 overflow-hidden bg-white"
+            className="absolute inset-0 z-20 overflow-hidden bg-white"
           >
             <img
               src={heroImageMobile}
               alt="Interior study"
-              className="absolute inset-0 h-full w-full object-cover object-center"
+              className="absolute inset-0 h-full w-full object-cover object-[center_70%]"
             />
           </motion.div>
         </div>
@@ -164,18 +164,18 @@ export function HeroSection() {
             whileInView="visible"
             viewport={{ once: false }}
             style={reduceMotion ? { opacity: 1 } : { opacity: revealOpacity, y: revealY }}
-            className="absolute inset-0 h-full w-full flex flex-col justify-between py-16 lg:py-24 xl:py-28 px-6 text-center text-[#1E3754] bg-white z-10"
+            className="absolute inset-0 h-full w-full flex flex-col justify-center items-center px-6 text-center text-[#1E3754] bg-white z-10"
           >
             {/* TOP: Refined Institutional Label */}
             <motion.div
               variants={lineVariants}
-              className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40 mx-auto"
+              className="text-[0.66rem] font-semibold uppercase tracking-[0.45em] text-[#1E3754]/40 mb-10 lg:mb-12"
             >
               Institutional Presence
             </motion.div>
 
             {/* MIDDLE: Monumental Centered Editorial Heading + Restrained Supporting Statement */}
-            <div className="my-auto py-12 flex flex-col items-center">
+            <div className="flex flex-col items-center">
               <h1 className="text-[#1E3754] text-center font-light tracking-[-0.05em] text-[clamp(4rem,9.5vw,8rem)] leading-[0.9] select-none flex flex-col items-center">
                 <span className="overflow-hidden inline-block py-2">
                   <motion.span variants={lineVariants} transition={{ delay: 0.08 }} className="inline-block">
@@ -192,7 +192,7 @@ export function HeroSection() {
               <motion.div
                 variants={lineVariants}
                 transition={{ delay: 0.24 }}
-                className="my-10 lg:my-12 h-px w-24 bg-[#1E3754]/14"
+                className="my-8 lg:my-10 h-px w-24 bg-[#1E3754]/14"
               />
 
               <motion.p
@@ -202,17 +202,17 @@ export function HeroSection() {
               >
                 A discreet institutional office structured for continuity, governance clarity, and long-horizon stewardship across generations.
               </motion.p>
-            </div>
 
-            {/* BOTTOM: Minimal coordinates / metadata integrated into rhythm */}
-            <motion.div
-              variants={lineVariants}
-              transition={{ delay: 0.40 }}
-              className="flex justify-between items-center w-full max-w-[28rem] mx-auto text-[0.66rem] uppercase tracking-[0.25em] text-[#1E3754]/38 border-t border-[#1E3754]/8 pt-5"
-            >
-              <span>Stewardship Council</span>
-              <span>Est. 2026</span>
-            </motion.div>
+              {/* BOTTOM: Minimal coordinates / metadata */}
+              <motion.div
+                variants={lineVariants}
+                transition={{ delay: 0.40 }}
+                className="flex justify-between items-center w-full max-w-[28rem] mt-10 lg:mt-12 text-[0.66rem] uppercase tracking-[0.25em] text-[#1E3754]/38 border-t border-[#1E3754]/8 pt-5"
+              >
+                <span>Stewardship Council</span>
+                <span>Est. 2026</span>
+              </motion.div>
+            </div>
           </motion.div>
 
           {/* FULLSCREEN SLIDING IMAGE PANEL (Covers the reveal typography initially) */}
@@ -223,7 +223,7 @@ export function HeroSection() {
             <img
               src={heroImage}
               alt="Interior study"
-              className="absolute inset-0 h-full w-full object-cover object-center"
+              className="absolute inset-0 h-full w-full object-cover object-[center_70%]"
             />
           </motion.div>
 

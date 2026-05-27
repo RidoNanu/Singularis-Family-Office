@@ -1,1 +1,0 @@
-export const structuredData = {} as const;

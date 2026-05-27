@@ -1,8 +1,8 @@
 import { useRef, RefObject } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import heroService from '../../assets/imagery/hero_service.jpg';
-import strucImage from '../../assets/imagery/struc.jpg';
+import heroService from '../../assets/imagery/hero_service.webp';
+import strucImage from '../../assets/imagery/struc.webp';
 
 const easing = [0.22, 1, 0.36, 1] as const;
 
